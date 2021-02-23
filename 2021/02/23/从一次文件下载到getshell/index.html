@@ -217,21 +217,21 @@
 <p>由于没有实战过任意文件下载，于是去 gogo 了一下，发现一个任意文件下的地址：</p>
 <p><a target="_blank" rel="noopener" href="http://www.xxx.cn/down.php?file=download/xxxx.pdf">http://www.xxx.cn/down.php?file=download/xxxx.pdf</a></p>
 <p>随便输入一个文件看看</p>
-<p><img src="%5Cimage-20210223220700827.png" alt=""></p>
+<p><img src="%5Cimage-20210223220700827.png" alt="image-20210223220700827"></p>
 <p>好家伙，bt 默认不开启这个，但是通过这个报错我们也知道路径了，于是就下载一个 index.php</p>
-<p><img src="%5Cimage-20210223220746625.png" alt=""></p>
+<p><img src="%5Cimage-20210223220746625.png" alt="image-20210223220746625"></p>
 <p>通过这个文件，找到了其他的文件，重要的文件不就是数据库配置文件吗</p>
-<p><img src="%5Cimage-20210223220834250.png" alt=""></p>
+<p><img src="%5Cimage-20210223220834250.png" alt="image-20210223220834250"></p>
 <p>下载这个配置，得到后台地址和数据库登录信息等</p>
-<p><img src="%5Cimage-20210223220904743.png" alt=""></p>
+<p><img src="%5Cimage-20210223220904743.png" alt="image-20210223220904743"></p>
 <p>直接尝试连接（ip 直接 whois 查询），进入 admin 表，直接好家伙，密码还是明文</p>
-<p><img src="%5Cimage-20210223220936808.png" alt=""></p>
+<p><img src="%5Cimage-20210223220936808.png" alt="image-20210223220936808"></p>
 <p>通过刚刚得到的后台地址，直接进行登录</p>
-<p><img src="%5Cimage-20210223221009613.png" alt=""></p>
+<p><img src="%5Cimage-20210223221009613.png" alt="image-20210223221009613"></p>
 <p>产品配置发现一个上传点，直接选择添加，直接上传 php 文件，直接被过滤，说是非图片类型，难道是 mime 检测而已？直接尝试修改 Content-Type 头，成功上传</p>
-<p><img src="%5Cimage-20210223221115359.png" alt=""></p>
+<p><img src="%5Cimage-20210223221115359.png" alt="image-20210223221115359"></p>
 <p>右键查看图片，getshell</p>
-<p><img src="%5Cimage-20210223221206192.png" alt=""></p>
+<p><img src="%5Cimage-20210223221206192.png" alt="image-20210223221206192"></p>
 <h2 id="总结"><a class="markdownIt-Anchor" href="#总结">#</a> 总结</h2>
 <ol>
 <li>有下载的地方尝试或许有惊喜</li>
@@ -339,13 +339,13 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2021/02/10/CVE-2019-11043%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/">CVE-2019-11043漏洞复现</a>
+                    <a href="/2021/02/11/CVE-2017-8464%E8%BF%9C%E7%A8%8B%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/">CVE-2017-8464远程命令执行漏洞复现</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2021/02/11/CVE-2017-8464%E8%BF%9C%E7%A8%8B%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/">CVE-2017-8464远程命令执行漏洞复现</a>
+                    <a href="/2021/02/10/CVE-2019-11043%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/">CVE-2019-11043漏洞复现</a>
                 </span>
             </li>
             
@@ -390,11 +390,11 @@
                 
                 <div class="cloud-tags tab-pane nav bs-sidenav fade" id="sidebar-tags">
     
-    <a href="/tags/CVE/" style="font-size: 13.406808540564445px;" class="tag-cloud-link">CVE</a>
+    <a href="/tags/CVE/" style="font-size: 9.034785751864558px;" class="tag-cloud-link">CVE</a>
     
-    <a href="/tags/MSF/" style="font-size: 9.664838582084554px;" class="tag-cloud-link">MSF</a>
+    <a href="/tags/MSF/" style="font-size: 9.484231161385337px;" class="tag-cloud-link">MSF</a>
     
-    <a href="/tags/getshell/" style="font-size: 15.01907888082367px;" class="tag-cloud-link">getshell</a>
+    <a href="/tags/getshell/" style="font-size: 9.306612117567699px;" class="tag-cloud-link">getshell</a>
     
 </div>
                 
