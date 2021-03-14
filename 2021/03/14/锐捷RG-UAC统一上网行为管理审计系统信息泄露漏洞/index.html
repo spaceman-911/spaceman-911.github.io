@@ -10,7 +10,7 @@
     
     
     
-    <title>CVE-2019-11043漏洞复现 | spaceman&#39;blog</title>
+    <title>锐捷RG-UAC统一上网行为管理审计系统信息泄露漏洞 | spaceman&#39;blog</title>
     <link href="https://spaceman-911.gitee.io" rel="prefetch" />
 
     
@@ -170,13 +170,13 @@
         <i class="fa fa-home"></i>
         <a href="https://spaceman-911.gitee.io">spaceman&#39;blog</a>
         >
-        <span>CVE-2019-11043漏洞复现</span>
+        <span>锐捷RG-UAC统一上网行为管理审计系统信息泄露漏洞</span>
     </div>
     <!-- 大型设备详细文章 -->
     <div class="hidden-xs">
         <div class="title-article">
             <h1>
-                <a href="/2021/02/10/CVE-2019-11043%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/">CVE-2019-11043漏洞复现</a>
+                <a href="/2021/03/14/%E9%94%90%E6%8D%B7RG-UAC%E7%BB%9F%E4%B8%80%E4%B8%8A%E7%BD%91%E8%A1%8C%E4%B8%BA%E7%AE%A1%E7%90%86%E5%AE%A1%E8%AE%A1%E7%B3%BB%E7%BB%9F%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2%E6%BC%8F%E6%B4%9E/">锐捷RG-UAC统一上网行为管理审计系统信息泄露漏洞</a>
             </h1>
         </div>
         <div class="tag-article">
@@ -184,12 +184,12 @@
             <span class="label label-gal">
                 <i class="fa fa-tags"></i>
                 
-                <a href="/tags/CVE/">CVE</a>
+                <a href="/tags/%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2/">信息泄露</a>
                 
             </span>
             
             <span class="label label-gal">
-                <i class="fa fa-calendar"></i> 2021-02-10
+                <i class="fa fa-calendar"></i> 2021-03-14
             </span>
             
         </div>
@@ -199,17 +199,17 @@
         <center>
             <div class="title-article">
                 <h4>
-                    <a href="/2021/02/10/CVE-2019-11043%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/">CVE-2019-11043漏洞复现</a>
+                    <a href="/2021/03/14/%E9%94%90%E6%8D%B7RG-UAC%E7%BB%9F%E4%B8%80%E4%B8%8A%E7%BD%91%E8%A1%8C%E4%B8%BA%E7%AE%A1%E7%90%86%E5%AE%A1%E8%AE%A1%E7%B3%BB%E7%BB%9F%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2%E6%BC%8F%E6%B4%9E/">锐捷RG-UAC统一上网行为管理审计系统信息泄露漏洞</a>
                 </h4>
             </div>
             <p>
-                <i class="fa fa-calendar"></i> 2021-02-10
+                <i class="fa fa-calendar"></i> 2021-03-14
             </p>
             <p>
                 
                 <i class="fa fa-tags"></i>
                 
-                <a href="/tags/CVE/">CVE</a>
+                <a href="/tags/%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2/">信息泄露</a>
                 
                 
                 
@@ -217,52 +217,17 @@
         </center>
     </div>
     <div class="content-article">
-        <h1 id="cve-2019-11043漏洞复现"><a class="markdownIt-Anchor" href="#cve-2019-11043漏洞复现">#</a> CVE-2019-11043 漏洞复现</h1>
-<h2 id="0x01漏洞简介"><a class="markdownIt-Anchor" href="#0x01漏洞简介">#</a> 0x01 漏洞简介</h2>
-<p>nginx + php-fpm 配置不当，当 nginx 配置文件中有 <code>fastcgi_split_path_info</code> ，却没有 <code>if(!-f $document_root$fastcgi_script_name)&#123;return 404;&#125;</code>  的时候就会导致远程代码执行。</p>
-<p>向 Nginx + PHP-FPM 的服务器 URL 发送 %0a 时，服务器返回异常。</p>
-<p>该漏洞需要在 nginx.conf 中进行特定配置才能触发。具体配置如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">location ~ [^&#x2F;]\.php(&#x2F;|$) &#123;</span><br><span class="line">...</span><br><span class="line">fastcgi_split_path_info ^(.+?\.php)(&#x2F;.*)$;</span><br><span class="line">fastcgi_param PATH_INFO $fastcgi_path_info;</span><br><span class="line">fastcgi_pass   php:9000;</span><br><span class="line">...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>攻击者可以使用换行符（％0a）来破坏 <code>fastcgi_split_path_info</code>  指令中的 Regexp。 Regexp 被损坏导致 PATH_INFO 为空，从而触发该漏洞。</p>
-<p>影响版本：</p>
-<ul>
-<li>PHP 7.0 版本</li>
-<li>PHP 7.1 版本</li>
-<li>PHP 7.2 版本</li>
-<li>PHP 7.3 版本</li>
-</ul>
-<p>修复建议：</p>
-<ul>
-<li>PHP 7.1.X 更新至 7.1.33</li>
-<li>PHP 7.2.X 更新至 7.2.24</li>
-<li>PHP 7.3.X 更新至 7.3.11</li>
-</ul>
-<h2 id="0x02环境搭建"><a class="markdownIt-Anchor" href="#0x02环境搭建">#</a> 0x02 环境搭建</h2>
-<p>系统：kali</p>
-<h3 id="安装-docker-golang-环境"><a class="markdownIt-Anchor" href="#安装-docker-golang-环境">#</a> 安装 docker、golang 环境</h3>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install docker docker-compose</span><br><span class="line">sudo apt install golang</span><br></pre></td></tr></table></figure>
-<h3 id="搭建环境"><a class="markdownIt-Anchor" href="#搭建环境">#</a> 搭建环境</h3>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git clone https:&#x2F;&#x2F;github.com&#x2F;vulhub&#x2F;vulhub.git</span><br><span class="line">cd vulhub&#x2F;php&#x2F;CVE-2019-11043 &amp;&amp; docker-compose up -d</span><br></pre></td></tr></table></figure>
-<p><img src="/2021/02/10/CVE-2019-11043%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/image-20201225020429046.png" alt="image-20201225020429046"></p>
-<p>查看 docker 环境：</p>
-<p><img src="/2021/02/10/CVE-2019-11043%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/image-20201225020545973.png" alt="image-20201225020545973"></p>
-<p>访问 8080 端口，成功如下</p>
-<p><img src="/2021/02/10/CVE-2019-11043%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/image-20201225020623594.png" alt="image-20201225020623594"></p>
-<h2 id="0x03漏洞利用"><a class="markdownIt-Anchor" href="#0x03漏洞利用">#</a> 0x03 漏洞利用</h2>
-<h3 id="安装漏洞利用工具"><a class="markdownIt-Anchor" href="#安装漏洞利用工具">#</a> 安装漏洞利用工具</h3>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git clone https:&#x2F;&#x2F;github.com&#x2F;neex&#x2F;phuip-fpizdam.git</span><br><span class="line">cd phuip-fpizdam</span><br><span class="line">go env -w GOPROXY&#x3D;https:&#x2F;&#x2F;goproxy.cn</span><br><span class="line">go get -v &amp;&amp; go build</span><br></pre></td></tr></table></figure>
-<p><a target="_blank" rel="noopener" href="http://xn--proxy-2b3hg96kdbzartccz0f9e5b.golang.org">默认使用的是 proxy.golang.org</a>，在国内无法访问，所以换了一个国内能访问的代理地址：<a target="_blank" rel="noopener" href="https://goproxy.cn">https://goproxy.cn</a></p>
-<p><img src="/2021/02/10/CVE-2019-11043%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/image-20201225020830346.png" alt="image-20201225020830346"></p>
-<h3 id="工具攻击"><a class="markdownIt-Anchor" href="#工具攻击">#</a> 工具攻击</h3>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.&#x2F;phuip-fpizdam http:&#x2F;&#x2F;127.0.0.1:8080&#x2F;index.php</span><br></pre></td></tr></table></figure>
-<p><img src="/2021/02/10/CVE-2019-11043%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/image-20201225021123226.png" alt="image-20201225021123226"></p>
-<p>成功利用，参数名为 a</p>
-<p><img src="/2021/02/10/CVE-2019-11043%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/image-20201225021301464.png" alt="image-20201225021301464"></p>
-<h2 id="0x04参考链接"><a class="markdownIt-Anchor" href="#0x04参考链接">#</a> 0x04 参考链接：</h2>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43606134/article/details/107646467">https://blog.csdn.net/weixin_43606134/article/details/107646467</a></p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_43342566/article/details/102733144">https://blog.csdn.net/qq_43342566/article/details/102733144</a></p>
-<p><a target="_blank" rel="noopener" href="http://blog.leanote.com/post/snowming/9da184ef24bd">http://blog.leanote.com/post/snowming/9da184ef24bd</a></p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_40412037/article/details/111225967">https://blog.csdn.net/weixin_40412037/article/details/111225967</a></p>
+        <h1 id="锐捷rg-uac统一上网行为管理审计系统信息泄露漏洞"><a class="markdownIt-Anchor" href="#锐捷rg-uac统一上网行为管理审计系统信息泄露漏洞">#</a> 锐捷 RG-UAC 统一上网行为管理审计系统信息泄露漏洞</h1>
+<p>2021 年 3 月 8 日，锐捷 RG-UAC 统一上网行为管理审计系统存在信息泄露漏洞，攻击者可以通过审查网页源代码获取到用户账号和密码，导致管理员用户认证信息泄露。</p>
+<p>FOFA 语法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">title&#x3D;&quot;RG-UAC登录页面&quot; &amp;&amp; body&#x3D;&quot;admin&quot;</span><br></pre></td></tr></table></figure>
+<p>打开到登录页面，右键查看源码，搜索 admin</p>
+<p><img src="/2021/03/14/%E9%94%90%E6%8D%B7RG-UAC%E7%BB%9F%E4%B8%80%E4%B8%8A%E7%BD%91%E8%A1%8C%E4%B8%BA%E7%AE%A1%E7%90%86%E5%AE%A1%E8%AE%A1%E7%B3%BB%E7%BB%9F%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2%E6%BC%8F%E6%B4%9E/image-20210314201958971.png" alt="image-20210314201958971"></p>
+<p>md5 解密</p>
+<p><img src="/2021/03/14/%E9%94%90%E6%8D%B7RG-UAC%E7%BB%9F%E4%B8%80%E4%B8%8A%E7%BD%91%E8%A1%8C%E4%B8%BA%E7%AE%A1%E7%90%86%E5%AE%A1%E8%AE%A1%E7%B3%BB%E7%BB%9F%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2%E6%BC%8F%E6%B4%9E/image-20210314202030652.png" alt="image-20210314202030652"></p>
+<p>输入 admin 用户以及破解的密码，成功登录后台</p>
+<p><img src="/2021/03/14/%E9%94%90%E6%8D%B7RG-UAC%E7%BB%9F%E4%B8%80%E4%B8%8A%E7%BD%91%E8%A1%8C%E4%B8%BA%E7%AE%A1%E7%90%86%E5%AE%A1%E8%AE%A1%E7%B3%BB%E7%BB%9F%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2%E6%BC%8F%E6%B4%9E/image-20210314202146173.png" alt="image-20210314202146173"></p>
+<p>修复方式：更新系统版本</p>
 
     </div>
 </article>
@@ -433,17 +398,17 @@
 
                 
                 <li>
-                    <a href="/2021/02/10/CVE-2019-11043%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/index.html#sidebar-tags" data-toggle="tab" id="tags-tab">热门标签</a>
+                    <a href="/2021/03/14/%E9%94%90%E6%8D%B7RG-UAC%E7%BB%9F%E4%B8%80%E4%B8%8A%E7%BD%91%E8%A1%8C%E4%B8%BA%E7%AE%A1%E7%90%86%E5%AE%A1%E8%AE%A1%E7%B3%BB%E7%BB%9F%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2%E6%BC%8F%E6%B4%9E/index.html#sidebar-tags" data-toggle="tab" id="tags-tab">热门标签</a>
                 </li>
                 
                 
                 <li>
-                    <a href="/2021/02/10/CVE-2019-11043%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">友情链接</a>
+                    <a href="/2021/03/14/%E9%94%90%E6%8D%B7RG-UAC%E7%BB%9F%E4%B8%80%E4%B8%8A%E7%BD%91%E8%A1%8C%E4%B8%BA%E7%AE%A1%E7%90%86%E5%AE%A1%E8%AE%A1%E7%B3%BB%E7%BB%9F%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2%E6%BC%8F%E6%B4%9E/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">友情链接</a>
                 </li>
                 
                 
                 <li>
-                    <a href="/2021/02/10/CVE-2019-11043%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
+                    <a href="/2021/03/14/%E9%94%90%E6%8D%B7RG-UAC%E7%BB%9F%E4%B8%80%E4%B8%8A%E7%BD%91%E8%A1%8C%E4%B8%BA%E7%AE%A1%E7%90%86%E5%AE%A1%E8%AE%A1%E7%B3%BB%E7%BB%9F%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2%E6%BC%8F%E6%B4%9E/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
                 </li>
                 
             </ul>
@@ -451,15 +416,15 @@
                 
                 <div class="cloud-tags tab-pane nav bs-sidenav fade" id="sidebar-tags">
     
-    <a href="/tags/CVE/" style="font-size: 17.07759017363401px;" class="tag-cloud-link">CVE</a>
+    <a href="/tags/CVE/" style="font-size: 13.716039591804213px;" class="tag-cloud-link">CVE</a>
     
-    <a href="/tags/MSF/" style="font-size: 9.914634272245177px;" class="tag-cloud-link">MSF</a>
+    <a href="/tags/MSF/" style="font-size: 8.78996796334685px;" class="tag-cloud-link">MSF</a>
     
-    <a href="/tags/getshell/" style="font-size: 15.428440759101537px;" class="tag-cloud-link">getshell</a>
+    <a href="/tags/getshell/" style="font-size: 15.29220669005917px;" class="tag-cloud-link">getshell</a>
     
-    <a href="/tags/%E6%9D%83%E9%99%90/" style="font-size: 10.632430873088158px;" class="tag-cloud-link">权限</a>
+    <a href="/tags/%E6%9D%83%E9%99%90/" style="font-size: 10.663315822946764px;" class="tag-cloud-link">权限</a>
     
-    <a href="/tags/%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2/" style="font-size: 10.673171933774363px;" class="tag-cloud-link">信息泄露</a>
+    <a href="/tags/%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2/" style="font-size: 18.375782240741657px;" class="tag-cloud-link">信息泄露</a>
     
 </div>
                 
